@@ -25,7 +25,6 @@ namespace Platinio.TweenEngine
 
         private void Update()
         {
-
             for (int n = 0 ; n < m_tweens.Count ; n++)
             {                
                 m_tweens[n].Update();
@@ -81,12 +80,45 @@ namespace Platinio.TweenEngine
             return ProcessTween(tween);
         }
 
+        #region MOVE
         public BaseTween Move(Transform obj , Transform to , float t)
         {
             MoveTween tween = new MoveTween(obj , to , t , GenerateId());
             return ProcessTween(tween);
         }
 
+        public BaseTween Move(Transform obj , Vector3 to , float t)
+        {
+            Vector3Tween tween = new Vector3Tween(obj.position , to , t , GenerateId());
+            tween.SetOnUpdate((Vector3 pos) => 
+            {
+                obj.position = pos;
+            });
+            return ProcessTween(tween);
+        }
+
+        public BaseTween Move(GameObject obj , Transform to , float t)
+        {
+            return Move(obj.transform , to , t);
+        }
+
+        public BaseTween Move(GameObject obj, Vector3 to, float t)
+        {
+            return Move(obj.transform, to, t);
+        }
+
+        public BaseTween Move(GameObject obj, GameObject to, float t)
+        {
+            return Move(obj.transform, to.transform, t);
+        }
+
+        public BaseTween Move(Transform obj, GameObject to, float t)
+        {
+            return Move(obj, to.transform, t);
+        }
+        #endregion
+
+        
         #endregion
 
     }

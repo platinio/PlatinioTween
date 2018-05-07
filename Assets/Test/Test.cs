@@ -15,7 +15,7 @@ public class Test : MonoBehaviour
     void Start()
     {
        
-       PlatinioTween.instance.Move(obj.transform , to , 1.0f);
+       PlatinioTween.instance.Move(obj.transform , to.position , 1.0f);
               
     }
 
