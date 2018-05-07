@@ -35,9 +35,10 @@ namespace Platinio.TweenEngine
         /// Set ease type
         /// </summary>
         /// <param name="ease"></param>
-        public virtual void SetEase(Ease ease)
+        public virtual BaseTween SetEase(Ease ease)
         {
             m_ease = ease;
+            return this;
         }
 
         /// <summary>

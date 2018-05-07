@@ -116,6 +116,15 @@ namespace Platinio.TweenEngine
         {
             return Move(obj, to.transform, t);
         }
+
+        public BaseTween Move(RectTransform rect , Vector2 pos , float t)
+        {
+            return Vector3Tween(new Vector3(rect.position.x , rect.position.y , 0.0f) , new Vector3(pos.x, pos.y , 0.0f) , t).SetOnUpdate((Vector3 value) =>
+            {
+                rect.position = new Vector2(value.x , value.y);
+            });
+        }
+
         #endregion
 
         #region SCALE
