@@ -118,7 +118,54 @@ namespace Platinio.TweenEngine
         }
         #endregion
 
-        
+        #region SCALE
+        public BaseTween ScaleX(Transform obj , float value , float t)
+        {
+            return ValueTween(obj.localScale.x , value , t).SetOnUpdate((float v) => 
+            {
+                Vector3 currentScale = obj.localScale;
+                currentScale.x = v;
+                obj.localScale = currentScale;
+            });
+        }
+
+        public BaseTween ScaleX(GameObject obj, float value, float t)
+        {
+            return ScaleX(obj.transform , value , t);
+        }
+
+        public BaseTween ScaleY(Transform obj, float value, float t)
+        {
+            return ValueTween(obj.localScale.y, value, t).SetOnUpdate((float v) =>
+            {
+                Vector3 currentScale = obj.localScale;
+                currentScale.y = v;
+                obj.localScale = currentScale;
+            });
+        }
+
+        public BaseTween ScaleY(GameObject obj, float value, float t)
+        {
+            return ScaleY(obj.transform, value, t);
+        }
+
+        public BaseTween ScaleZ(Transform obj, float value, float t)
+        {
+            return ValueTween(obj.localScale.z, value, t).SetOnUpdate((float v) =>
+            {
+                Vector3 currentScale = obj.localScale;
+                currentScale.z = v;
+                obj.localScale = currentScale;
+            });
+        }
+
+        public BaseTween ScaleZ(GameObject obj, float value, float t)
+        {
+            return ScaleX(obj.transform, value, t);
+        }
+
+        #endregion
+
         #endregion
 
     }

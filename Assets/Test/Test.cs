@@ -15,7 +15,8 @@ public class Test : MonoBehaviour
     void Start()
     {
        
-       PlatinioTween.instance.Move(obj.transform , to.position , 1.0f);
+       PlatinioTween.instance.ScaleX(obj.transform , 10.0f , t);
+       PlatinioTween.instance.ScaleY(obj , 20.0f , t);
               
     }
 
