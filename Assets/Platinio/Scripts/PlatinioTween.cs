@@ -68,6 +68,13 @@ namespace Platinio.TweenEngine
 
 
         #region TWEENS
+
+        public BaseTween ColorTween(Color from, Color to, float t)
+        {
+            ColorTween tween = new ColorTween(from, to, t, GenerateId());
+            return ProcessTween(tween);
+        }
+
         public BaseTween Vector3Tween(Vector3 from , Vector3 to , float t)
         {
             Vector3Tween tween = new Vector3Tween(from , to , t , GenerateId() );
