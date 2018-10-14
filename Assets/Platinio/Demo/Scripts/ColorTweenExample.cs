@@ -12,6 +12,7 @@ namespace Demo
         [SerializeField] private float m_time = 0.0f;
 
         private Image m_image = null;
+        private int m_tweenID = -1;
 
         private void Awake()
         {
@@ -21,12 +22,18 @@ namespace Demo
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            PlatinioTween.instance.ColorTween(m_image.color , m_selectColor , m_time).SetOnUpdate(delegate(Color c) { m_image.color = c; });
+            if(m_tweenID != -1)
+                PlatinioTween.instance.CancelTween(m_tweenID);
+
+            m_tweenID = PlatinioTween.instance.ColorTween(m_image.color , m_selectColor , m_time).SetOnUpdate(delegate(Color c) { m_image.color = c; }).id;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            PlatinioTween.instance.ColorTween(m_image.color, m_normalColor, m_time).SetOnUpdate(delegate (Color c) { m_image.color = c; });
+            if (m_tweenID != -1)
+                PlatinioTween.instance.CancelTween(m_tweenID);
+
+            m_tweenID = PlatinioTween.instance.ColorTween(m_image.color, m_normalColor, m_time).SetOnUpdate(delegate (Color c) { m_image.color = c; }).id;
         }
     }
 

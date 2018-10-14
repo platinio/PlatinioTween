@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System;
 
 namespace Platinio.TweenEngine
-{    
-    
+{
+
     /// <summary>
     /// Tween engine
     /// </summary>
     public class PlatinioTween : Singleton<PlatinioTween>
     {
         #region PRIVATE
-        private List<BaseTween> m_tweens    = null;
-        private int             m_counter   = 0;
+        private List<BaseTween> m_tweens = null;
+        private int m_counter = 0;
         #endregion
 
         #region UNITY_EVENTS
@@ -25,8 +25,8 @@ namespace Platinio.TweenEngine
 
         private void Update()
         {
-            for (int n = 0 ; n < m_tweens.Count ; n++)
-            {                
+            for (int n = 0; n < m_tweens.Count; n++)
+            {
                 m_tweens[n].Update();
             }
         }
@@ -48,7 +48,7 @@ namespace Platinio.TweenEngine
 
         private BaseTween ProcessTween(BaseTween tween)
         {
-            tween.SetOnComplete( delegate { m_tweens.Remove(tween); } );
+            tween.SetOnComplete(delegate { m_tweens.Remove(tween); });
             m_tweens.Add(tween);
 
             return tween;
@@ -68,6 +68,13 @@ namespace Platinio.TweenEngine
 
 
         #region TWEENS
+
+        public BaseTween ColorTween(SpriteRenderer sprite , Color to , float t)
+        {
+            ColorTween tween = new ColorTween(sprite.color, to, t, GenerateId());
+            tween.SetOnUpdate(delegate (Color c) { sprite.color = c; });
+            return ProcessTween(tween);
+        }
 
         public BaseTween ColorTween(Image image, Color to, float t)
         {

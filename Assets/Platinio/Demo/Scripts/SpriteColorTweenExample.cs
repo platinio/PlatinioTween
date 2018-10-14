@@ -1,24 +1,23 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Platinio.TweenEngine;
 
 namespace Demo
 {
-    public class ImageColorTweenExample : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class SpriteColorTweenExample : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
 
         [SerializeField] private Color m_selectColor = Color.black;
         [SerializeField] private Color m_normalColor = Color.black;
         [SerializeField] private float m_time = 0.0f;
 
-        private Image m_image = null;
+        private SpriteRenderer m_sprite = null;
         private int m_tweenID = -1;
 
         private void Awake()
         {
-            m_image = GetComponent<Image>();
-            m_image.color = m_normalColor;
+            m_sprite = GetComponent<SpriteRenderer>();
+            m_sprite.color = m_normalColor;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -26,7 +25,7 @@ namespace Demo
             if (m_tweenID != -1)
                 PlatinioTween.instance.CancelTween(m_tweenID);
 
-            m_tweenID = PlatinioTween.instance.ColorTween(m_image , m_selectColor, m_time).id;
+             m_tweenID = PlatinioTween.instance.ColorTween(m_sprite, m_selectColor, m_time).id;
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -34,9 +33,8 @@ namespace Demo
             if (m_tweenID != -1)
                 PlatinioTween.instance.CancelTween(m_tweenID);
 
-            m_tweenID = PlatinioTween.instance.ColorTween(m_image, m_normalColor, m_time).id;
+            m_tweenID = PlatinioTween.instance.ColorTween(m_sprite, m_normalColor, m_time).id;
         }
-
     }
 
 }
