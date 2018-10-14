@@ -25,6 +25,7 @@ namespace Platinio.TweenEngine
         protected Action<float>     m_onUpdateFloat     = null;
         protected Action<Transform> m_onUpdateTransform = null;
         protected Action<Color>     m_onUpdateColor     = null;
+        protected Action<Vector2>   m_onUpdateVector2   = null;
         #endregion
 
         /// <summary>
@@ -62,6 +63,12 @@ namespace Platinio.TweenEngine
         {
             m_delay = t;
 
+            return this;
+        }
+
+        public virtual BaseTween SetOnUpdate(Action<Vector2> action)
+        {
+            m_onUpdateVector2 += action;
             return this;
         }
 

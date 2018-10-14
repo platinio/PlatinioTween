@@ -1,5 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
@@ -69,9 +69,22 @@ namespace Platinio.TweenEngine
 
         #region TWEENS
 
+        public BaseTween ColorTween(Image image, Color to, float t)
+        {
+            ColorTween tween = new ColorTween(image.color, to, t, GenerateId());
+            tween.SetOnUpdate(delegate (Color c){ image.color = c; });
+            return ProcessTween(tween);
+        }
+
         public BaseTween ColorTween(Color from, Color to, float t)
         {
             ColorTween tween = new ColorTween(from, to, t, GenerateId());
+            return ProcessTween(tween);
+        }
+
+        public BaseTween Vector2Tween(Vector2 from , Vector2 to , float t)
+        {
+            Vector2Tween tween = new Vector2Tween( from , to , t , GenerateId());
             return ProcessTween(tween);
         }
 
