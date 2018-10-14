@@ -9,11 +9,7 @@ namespace Demo
 
         private void Awake()
         {
-            PlatinioTween.instance.ScaleX(m_go , 50.0f , 10.0f);
-            PlatinioTween.instance.ScaleY(m_go, 50.0f, 10.0f).SetDelay(4.0f).SetOnComplete(() => 
-            {
-                Debug.Log("complete");
-            });
+            PlatinioTween.instance.ScaleTween(m_go.transform , Vector3.one * 8 , 1.5f).SetEase(Ease.EaseOutElastic).SetDelay(2.0f);
         }
     }
 

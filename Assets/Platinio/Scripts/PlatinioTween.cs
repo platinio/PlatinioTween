@@ -69,6 +69,16 @@ namespace Platinio.TweenEngine
 
         #region TWEENS
 
+        public BaseTween ScaleTween(Transform t , Vector3 to , float time)
+        {
+            Vector3Tween tween = new Vector3Tween(t.localScale, to, time, GenerateId());
+            tween.SetOnUpdate(delegate(Vector3 v) 
+            {
+                t.localScale = v;
+            });
+            return ProcessTween(tween);
+        }
+
         public BaseTween RotateTween(Transform t , Vector3 axis , float to , float time)
         {
             Vector3Tween tween = new Vector3Tween(t.rotation.eulerAngles , axis * to , time, GenerateId());
