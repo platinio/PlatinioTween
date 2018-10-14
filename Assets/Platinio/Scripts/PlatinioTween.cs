@@ -69,6 +69,16 @@ namespace Platinio.TweenEngine
 
         #region TWEENS
 
+        public BaseTween RotateTween(Transform t , Vector3 axis , float to , float time)
+        {
+            Vector3Tween tween = new Vector3Tween(t.rotation.eulerAngles , axis * to , time, GenerateId());
+            tween.SetOnUpdate(delegate(Vector3 v) 
+            {
+                t.rotation = Quaternion.Euler(v);
+            });
+            return ProcessTween(tween);
+        }
+
         public BaseTween FadeOut(CanvasGroup cg, float t)
         {
             ValueTween tween = new ValueTween(cg.alpha, 0.0f, t, GenerateId());
