@@ -69,6 +69,27 @@ namespace Platinio.TweenEngine
 
         #region TWEENS
 
+        public BaseTween FadeOut(CanvasGroup cg, float t)
+        {
+            ValueTween tween = new ValueTween(cg.alpha, 0.0f, t, GenerateId());
+            tween.SetOnUpdate(delegate (float v) { cg.alpha = v; });
+            return ProcessTween(tween);
+        }
+
+        public BaseTween FadeIn(CanvasGroup cg, float t)
+        {
+            ValueTween tween = new ValueTween(cg.alpha, 1.0f , t, GenerateId());
+            tween.SetOnUpdate(delegate (float v) { cg.alpha = v; });
+            return ProcessTween(tween);
+        }
+
+        public BaseTween Fade(CanvasGroup cg , float to , float t)
+        {
+            ValueTween tween = new ValueTween(cg.alpha, to, t, GenerateId());
+            tween.SetOnUpdate(delegate(float v) { cg.alpha = v; });
+            return ProcessTween(tween);
+        }
+
         public BaseTween ColorTween(SpriteRenderer sprite , Color to , float t)
         {
             ColorTween tween = new ColorTween(sprite.color, to, t, GenerateId());
