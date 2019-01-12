@@ -238,7 +238,7 @@ namespace Platinio.TweenEngine
 
         public BaseTween ScaleZ(GameObject obj, float value, float t)
         {
-            return ScaleX(obj.transform, value, t);
+            return ScaleZ(obj.transform, value, t);
         }
 
         #endregion
