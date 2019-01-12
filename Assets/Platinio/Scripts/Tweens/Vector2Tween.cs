@@ -37,10 +37,11 @@ namespace Platinio.TweenEngine
             //if time ends
             if (m_currentTime >= m_duration)
             {
-                m_onComplete();
+               
+                if (m_onUpdateVector2 != null)
+                    m_onUpdateVector2(m_to);
 
-                if (m_onUpdateVector3 != null)
-                    m_onUpdateVector3(m_to);
+                m_onComplete();
                 return;
             }
 
@@ -51,7 +52,7 @@ namespace Platinio.TweenEngine
             //Vector2 vector2Value = new Vector2(value.x , value.y);
 
             //call update if we have it
-            if (m_onUpdateVector3 != null)
+            if (m_onUpdateVector2 != null)
                 m_onUpdateVector2(value);
         }
         #endregion
