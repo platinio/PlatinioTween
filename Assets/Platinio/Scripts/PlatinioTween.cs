@@ -27,7 +27,7 @@ namespace Platinio.TweenEngine
         {
             for (int n = 0; n < m_tweens.Count; n++)
             {
-                m_tweens[n].Update();
+                m_tweens[n].Update(Time.deltaTime);
             }
         }
         #endregion

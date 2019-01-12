@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Platinio.TweenEngine
 {
@@ -17,17 +15,17 @@ namespace Platinio.TweenEngine
             m_id = id;
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             //wait a delay
             if (m_delay > 0.0f)
             {
-                m_delay -= Time.deltaTime;
+                m_delay -= deltaTime;
                 return;
             }
 
             //start counting time
-            m_currentTime += Time.deltaTime;
+            m_currentTime += deltaTime;
 
             //if time ends
             if (m_currentTime >= m_duration)

@@ -31,7 +31,7 @@ namespace Platinio.TweenEngine
         /// <summary>
         /// Called to update this tween
         /// </summary>
-        public abstract void Update();
+        public abstract void Update(float deltaTime);
                 
         /// <summary>
         /// Set ease type
