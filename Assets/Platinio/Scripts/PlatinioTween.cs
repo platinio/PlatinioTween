@@ -355,7 +355,7 @@ namespace Platinio.TweenEngine
 
         public BaseTween MoveUI(RectTransform rect , Vector2 absolutePosition , RectTransform canvas , float t)
         {
-            Vector2 pos = FromAbsolutePosition(absolutePosition , rect , canvas);
+            Vector2 pos = PlatinioTween.FromAbsolutePositionToCanvasPosition(absolutePosition , rect , canvas);
 
             return Move(rect , pos , t);
         }
@@ -363,9 +363,14 @@ namespace Platinio.TweenEngine
         #endregion
 
 
-        private Vector2 FromAbsolutePosition(Vector2 v, RectTransform rect , RectTransform canvas)
+        public static Vector2 FromAbsolutePositionToCanvasPosition(Vector2 v, RectTransform rect , RectTransform canvas)
         {
             return Vector2.Scale(v - rect.anchorMin, canvas.sizeDelta);
+        }
+
+        public static Vector2 FromCanvasPositionToAbsolutePosition(RectTransform rect, RectTransform canvas)
+        {
+            return new Vector2(rect.anchoredPosition.x / canvas.sizeDelta.x , rect.anchoredPosition.y / canvas.sizeDelta.y) + rect.anchorMin;
         }
 
     }
