@@ -328,6 +328,7 @@ namespace Platinio.TweenEngine
 
         public BaseTween Move(RectTransform rect , Vector2 pos , float t)
         {
+
             return Vector3Tween(new Vector3(rect.anchoredPosition.x , rect.anchoredPosition.y , 0.0f) , new Vector3(pos.x, pos.y , 0.0f) , t).SetOnUpdate((Vector3 value) =>
             {
                 rect.anchoredPosition = new Vector2(value.x , value.y);
@@ -358,6 +359,16 @@ namespace Platinio.TweenEngine
             Vector2 pos = PlatinioTween.FromAbsolutePositionToCanvasPosition(absolutePosition , rect , canvas);
 
             return Move(rect , pos , t);
+        }
+
+        public BaseTween MoveUIAtSpeed(RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float speed)
+        {
+            
+            Vector2 pos = PlatinioTween.FromAbsolutePositionToCanvasPosition(absolutePosition, rect, canvas);
+
+            float time = Vector3.Distance(rect.anchoredPosition, pos) / speed;
+
+            return MoveUI(rect, absolutePosition, canvas , time);
         }
 
         #endregion

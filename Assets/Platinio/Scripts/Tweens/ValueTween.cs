@@ -38,10 +38,12 @@ namespace Platinio.TweenEngine
             //if time ends
             if (m_currentTime >= m_duration)
             {
-                m_onComplete();
+                
 
                 if (m_onUpdateFloat != null)
                     m_onUpdateFloat(m_to);
+
+                m_onComplete();
                 return;
             }
 

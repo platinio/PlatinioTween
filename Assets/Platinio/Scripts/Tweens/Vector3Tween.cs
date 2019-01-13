@@ -40,10 +40,11 @@ namespace Platinio.TweenEngine
             //if time ends
             if (m_currentTime >= m_duration)
             {
-                m_onComplete();
-
+                
                 if(m_onUpdateVector3 != null)
                     m_onUpdateVector3(m_to);
+
+                m_onComplete();
                 return;
             }
 

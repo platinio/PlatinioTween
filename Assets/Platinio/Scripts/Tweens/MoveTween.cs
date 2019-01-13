@@ -43,11 +43,12 @@ namespace Platinio.TweenEngine
             if (m_currentTime >= m_duration)
             {
                 m_object.position = m_to.position;
-
-                m_onComplete();
+                               
 
                 if (m_onUpdateTransform != null)
                     m_onUpdateTransform(m_object);
+
+                m_onComplete();
                 return;
             }
             
