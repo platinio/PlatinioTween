@@ -67,8 +67,8 @@ namespace Platinio.TweenEngine
         }
 
 
-        #region TWEENS
-
+        
+        #region SCALE_TWEENS
         public BaseTween ScaleTween(Transform t , Vector3 to , float time)
         {
             Vector3Tween tween = new Vector3Tween(t.localScale, to, time, GenerateId());
@@ -78,6 +78,84 @@ namespace Platinio.TweenEngine
             });
             return ProcessTween(tween);
         }
+
+        public BaseTween ScaleTween(GameObject go, Vector3 to, float time)
+        {
+            return ScaleTween(go.transform , to , time);
+        }
+
+        public BaseTween ScaleTween(RectTransform rect, Vector3 to, float time)
+        {
+            return ScaleTween(rect.transform, to, time);
+        }
+
+        public BaseTween ScaleTweenAtSpeed(Transform t, Vector3 to, float speed)
+        {
+            float time = Vector3.Distance(t.position , to) / speed;
+
+            return ScaleTween(t, to, time);
+        }
+
+        public BaseTween ScaleTweenAtSpeed(GameObject go, Vector3 to, float speed)
+        {
+            float time = Vector3.Distance(go.transform.position, to) / speed;
+
+            return ScaleTween(go, to, time);
+        }
+
+        public BaseTween ScaleTweenAtSpeed(RectTransform rect, Vector3 to, float speed)
+        {
+            float time = Vector3.Distance(rect.transform.position, to) / speed;
+
+            return ScaleTween(rect.transform, to, time);
+        }
+        public BaseTween ScaleX(Transform obj, float value, float t)
+        {
+            return ValueTween(obj.localScale.x, value, t).SetOnUpdate((float v) =>
+            {
+                Vector3 currentScale = obj.localScale;
+                currentScale.x = v;
+                obj.localScale = currentScale;
+            });
+        }
+
+        public BaseTween ScaleX(GameObject obj, float value, float t)
+        {
+            return ScaleX(obj.transform, value, t);
+        }
+
+        public BaseTween ScaleY(Transform obj, float value, float t)
+        {
+            return ValueTween(obj.localScale.y, value, t).SetOnUpdate((float v) =>
+            {
+                Vector3 currentScale = obj.localScale;
+                currentScale.y = v;
+                obj.localScale = currentScale;
+            });
+        }
+
+        public BaseTween ScaleY(GameObject obj, float value, float t)
+        {
+            return ScaleY(obj.transform, value, t);
+        }
+
+        public BaseTween ScaleZ(Transform obj, float value, float t)
+        {
+            return ValueTween(obj.localScale.z, value, t).SetOnUpdate((float v) =>
+            {
+                Vector3 currentScale = obj.localScale;
+                currentScale.z = v;
+                obj.localScale = currentScale;
+            });
+        }
+
+        public BaseTween ScaleZ(GameObject obj, float value, float t)
+        {
+            return ScaleZ(obj.transform, value, t);
+        }
+        #endregion
+
+        #region ROTATE_TWEENS
 
         public BaseTween RotateTween(Transform t , Vector3 axis , float to , float time)
         {
@@ -89,28 +167,85 @@ namespace Platinio.TweenEngine
             return ProcessTween(tween);
         }
 
+        public BaseTween RotateTween(GameObject go, Vector3 axis, float to, float time)
+        {
+            return RotateTween(go.transform , axis , to , time);
+        }
+
+        public BaseTween RotateTween(RectTransform rect, Vector3 axis, float to, float time)
+        {
+            return RotateTween(rect.transform, axis, to, time);
+        }
+
+        #endregion
+
+        #region FADE_TWEENS
+
         public BaseTween FadeOut(CanvasGroup cg, float t)
         {
-            ValueTween tween = new ValueTween(cg.alpha, 0.0f, t, GenerateId());
-            tween.SetOnUpdate(delegate (float v) { cg.alpha = v; });
-            return ProcessTween(tween);
+            return Fade(cg, 0.0f, t);
         }
 
         public BaseTween FadeIn(CanvasGroup cg, float t)
         {
-            ValueTween tween = new ValueTween(cg.alpha, 1.0f , t, GenerateId());
+            return Fade(cg , 1.0f , t);           
+        }
+
+        public BaseTween Fade(CanvasGroup cg, float to, float t)
+        {
+            ValueTween tween = new ValueTween(cg.alpha, to, t, GenerateId());
             tween.SetOnUpdate(delegate (float v) { cg.alpha = v; });
             return ProcessTween(tween);
         }
 
-        public BaseTween Fade(CanvasGroup cg , float to , float t)
+        public BaseTween Fade(Image image, float to, float t)
         {
-            ValueTween tween = new ValueTween(cg.alpha, to, t, GenerateId());
-            tween.SetOnUpdate(delegate(float v) { cg.alpha = v; });
+            ValueTween tween = new ValueTween( image.color.a , to, t, GenerateId());
+            tween.SetOnUpdate(delegate (float v) 
+            {
+                Color c = image.color;
+                c.a = v;
+                image.color = c;
+            });
             return ProcessTween(tween);
         }
 
-        public BaseTween ColorTween(SpriteRenderer sprite , Color to , float t)
+        public BaseTween FadeOut(Image image , float t)
+        {
+            return Fade(image , 0.0f , t);
+        }
+
+        public BaseTween FadeIn(Image image, float t)
+        {
+            return Fade(image, 1.0f, t);
+        }
+
+        public BaseTween Fade(SpriteRenderer sprite, float to, float t)
+        {
+            ValueTween tween = new ValueTween(sprite.color.a, to, t, GenerateId());
+            tween.SetOnUpdate(delegate (float v)
+            {
+                Color c = sprite.color;
+                c.a = v;
+                sprite.color = c;
+            });
+            return ProcessTween(tween);
+        }
+
+        public BaseTween FadeOut(SpriteRenderer sprite, float t)
+        {
+            return Fade(sprite, 0.0f, t);
+        }
+
+        public BaseTween FadeIn(SpriteRenderer sprite, float t)
+        {
+            return Fade(sprite, 1.0f, t);
+        }
+
+        #endregion
+
+        #region COLOR_TWEEN
+        public BaseTween ColorTween(SpriteRenderer sprite, Color to, float t)
         {
             ColorTween tween = new ColorTween(sprite.color, to, t, GenerateId());
             tween.SetOnUpdate(delegate (Color c) { sprite.color = c; });
@@ -120,7 +255,7 @@ namespace Platinio.TweenEngine
         public BaseTween ColorTween(Image image, Color to, float t)
         {
             ColorTween tween = new ColorTween(image.color, to, t, GenerateId());
-            tween.SetOnUpdate(delegate (Color c){ image.color = c; });
+            tween.SetOnUpdate(delegate (Color c) { image.color = c; });
             return ProcessTween(tween);
         }
 
@@ -129,26 +264,32 @@ namespace Platinio.TweenEngine
             ColorTween tween = new ColorTween(from, to, t, GenerateId());
             return ProcessTween(tween);
         }
+        #endregion
 
-        public BaseTween Vector2Tween(Vector2 from , Vector2 to , float t)
+        #region VECTOR_TWEEN
+        public BaseTween Vector2Tween(Vector2 from, Vector2 to, float t)
         {
-            Vector2Tween tween = new Vector2Tween( from , to , t , GenerateId());
+            Vector2Tween tween = new Vector2Tween(from, to, t, GenerateId());
             return ProcessTween(tween);
         }
 
-        public BaseTween Vector3Tween(Vector3 from , Vector3 to , float t)
+        public BaseTween Vector3Tween(Vector3 from, Vector3 to, float t)
         {
-            Vector3Tween tween = new Vector3Tween(from , to , t , GenerateId() );
-            return ProcessTween(tween);           
+            Vector3Tween tween = new Vector3Tween(from, to, t, GenerateId());
+            return ProcessTween(tween);
         }
+        #endregion
 
+
+        #region VALUE_TWEEN
         public BaseTween ValueTween(float from , float to , float t)
         {
             ValueTween tween = new ValueTween(from , to , t , GenerateId());
             return ProcessTween(tween);
         }
+        #endregion
 
-        #region MOVE
+        #region MOVE_TWEEN
         public BaseTween Move(Transform obj , Transform to , float t)
         {
             MoveTween tween = new MoveTween(obj , to , t , GenerateId());
@@ -193,57 +334,39 @@ namespace Platinio.TweenEngine
             });
         }
 
-        #endregion
+        //use this to position UI in absolute coordenates
+        //0.0 , 1.0 _______________________1.0 , 1.0
+        //          |                      |
+        //          |                      |                  
+        //          |                      |
+        //          |                      |
+        //0.0 , 0.0 |______________________| 1.0 , 0.0
 
-        #region SCALE
-        public BaseTween ScaleX(Transform obj , float value , float t)
-        {
-            return ValueTween(obj.localScale.x , value , t).SetOnUpdate((float v) => 
-            {
-                Vector3 currentScale = obj.localScale;
-                currentScale.x = v;
-                obj.localScale = currentScale;
-            });
-        }
+        
+        /// <summary>
+        /// Move a UI element using absolute position
+        /// Note: dont use this on Awake
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="absolutePosition"></param>
+        /// <param name="canvas"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>        
 
-        public BaseTween ScaleX(GameObject obj, float value, float t)
+        public BaseTween MoveUI(RectTransform rect , Vector2 absolutePosition , RectTransform canvas , float t)
         {
-            return ScaleX(obj.transform , value , t);
-        }
+            Vector2 pos = FromAbsolutePosition(absolutePosition , rect , canvas);
 
-        public BaseTween ScaleY(Transform obj, float value, float t)
-        {
-            return ValueTween(obj.localScale.y, value, t).SetOnUpdate((float v) =>
-            {
-                Vector3 currentScale = obj.localScale;
-                currentScale.y = v;
-                obj.localScale = currentScale;
-            });
-        }
-
-        public BaseTween ScaleY(GameObject obj, float value, float t)
-        {
-            return ScaleY(obj.transform, value, t);
-        }
-
-        public BaseTween ScaleZ(Transform obj, float value, float t)
-        {
-            return ValueTween(obj.localScale.z, value, t).SetOnUpdate((float v) =>
-            {
-                Vector3 currentScale = obj.localScale;
-                currentScale.z = v;
-                obj.localScale = currentScale;
-            });
-        }
-
-        public BaseTween ScaleZ(GameObject obj, float value, float t)
-        {
-            return ScaleZ(obj.transform, value, t);
+            return Move(rect , pos , t);
         }
 
         #endregion
 
-        #endregion
+
+        private Vector2 FromAbsolutePosition(Vector2 v, RectTransform rect , RectTransform canvas)
+        {
+            return Vector2.Scale(v - rect.anchorMin, canvas.sizeDelta);
+        }
 
     }
 
