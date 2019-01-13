@@ -24,6 +24,8 @@ namespace Platinio.TweenEngine
                 return;
             }
 
+            base.Update(deltaTime);
+
             //start counting time
             m_currentTime += deltaTime;
 

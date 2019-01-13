@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Platinio.TweenEngine
 {
@@ -26,12 +28,24 @@ namespace Platinio.TweenEngine
         protected Action<Transform> m_onUpdateTransform = null;
         protected Action<Color>     m_onUpdateColor     = null;
         protected Action<Vector2>   m_onUpdateVector2   = null;
+        protected List<TimeEvent>   m_events            = new List<TimeEvent>();
         #endregion
+
+        private float m_timeSinceStart = 0.0f;
 
         /// <summary>
         /// Called to update this tween
         /// </summary>
-        public abstract void Update(float deltaTime);
+        public virtual void Update(float deltaTime)
+        {
+            m_timeSinceStart += deltaTime;
+
+            if (m_events.Count > 0 && m_timeSinceStart >= m_events[0].Time)
+            {
+                m_events[0].Action();
+                m_events.RemoveAt(0);
+            }
+        }
                 
         /// <summary>
         /// Set ease type
@@ -40,6 +54,18 @@ namespace Platinio.TweenEngine
         public virtual BaseTween SetEase(Ease ease)
         {
             m_ease = ease;
+            return this;
+        }
+
+        public BaseTween SetEvent(Action action , float t)
+        {
+            m_events.Add(new TimeEvent(action , t));
+
+            //sort this list
+            if(m_events.Count > 1)
+                m_events = m_events.OrderBy( o => o.Time).ToList();
+
+           
             return this;
         }
 
@@ -111,6 +137,18 @@ namespace Platinio.TweenEngine
             return this;
         }
 
+    }
+
+    public class TimeEvent
+    {
+        public Action Action;
+        public float Time;
+
+        public TimeEvent(Action action , float t)
+        {
+            Action = action;
+            Time = t;
+        }
     }
 
 }

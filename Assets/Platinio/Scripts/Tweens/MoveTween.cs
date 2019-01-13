@@ -26,12 +26,15 @@ namespace Platinio.TweenEngine
         /// </summary>
         public override void Update(float deltaTime)
         {
+           
             //wait a delay
             if (m_delay > 0.0f)
             {
                 m_delay -= deltaTime;
                 return;
             }
+
+            base.Update(deltaTime);
 
             //start counting time
             m_currentTime += deltaTime;
