@@ -7,6 +7,7 @@ namespace Platinio
 {
     public class Animal : MonoBehaviour , IPointerEnterHandler , IPointerExitHandler , IPointerClickHandler
     {
+        [SerializeField] private Vector3 m_scale = Vector3.zero;
         [SerializeField] private float m_speed = 50.0f;
         [SerializeField] private float m_scapeTime = 0.01f;
         [SerializeField] private float m_rotAmount = 360.0f;
@@ -22,12 +23,16 @@ namespace Platinio
         private int m_tweenId = -1;
         private bool m_dead = false;
 
-        public void Construct(AnimalCatchManager manager)
+        public void Construct(AnimalCatchManager manager , Sprite sprite)
         {
+            GetComponent<Image>().sprite = sprite;
+            GetComponent<Image>().SetNativeSize();
+
             m_manager = manager;
             m_thisRect = GetComponent<RectTransform>();
             m_canvas = m_manager.Canvas;
             
+            transform.localScale = m_scale;
 
             m_thisRect.anchoredPosition = GetRandomPoint();
         }

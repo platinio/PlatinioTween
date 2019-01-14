@@ -18,9 +18,8 @@ namespace Platinio
             for (int n = 0 ; n < m_amount ; n++)
             {
                 Animal clone = Instantiate(m_animalPrefab , m_canvas.transform);
-                clone.transform.localScale = Vector3.one;
-
-                clone.Construct(this);
+                
+                clone.Construct(this , m_animalSprites[Random.Range(0 , m_animalSprites.Count)]);
             }
         }
         

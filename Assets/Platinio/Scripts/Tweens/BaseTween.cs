@@ -33,8 +33,7 @@ namespace Platinio.TweenEngine
 
         private float m_timeSinceStart = 0.0f;
 
-        public bool ShouldBeCleaned { get; set; }
-
+        
         /// <summary>
         /// Called to update this tween
         /// </summary>

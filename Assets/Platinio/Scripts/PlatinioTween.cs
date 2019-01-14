@@ -74,6 +74,13 @@ namespace Platinio.TweenEngine
             Vector3Tween tween = new Vector3Tween(t.localScale, to, time, GenerateId());
             tween.SetOnUpdate(delegate(Vector3 v) 
             {
+                if (t == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+                    
+
                 t.localScale = v;
             });
             return ProcessTween(tween);
@@ -113,6 +120,11 @@ namespace Platinio.TweenEngine
         {
             return ValueTween(obj.localScale.x, value, t).SetOnUpdate((float v) =>
             {
+                if (obj == null)
+                {                    
+                    return;
+                }
+
                 Vector3 currentScale = obj.localScale;
                 currentScale.x = v;
                 obj.localScale = currentScale;
@@ -128,6 +140,9 @@ namespace Platinio.TweenEngine
         {
             return ValueTween(obj.localScale.y, value, t).SetOnUpdate((float v) =>
             {
+                if(obj == null)
+                    return;
+
                 Vector3 currentScale = obj.localScale;
                 currentScale.y = v;
                 obj.localScale = currentScale;
@@ -143,6 +158,9 @@ namespace Platinio.TweenEngine
         {
             return ValueTween(obj.localScale.z, value, t).SetOnUpdate((float v) =>
             {
+                if(obj == null)
+                    return;
+
                 Vector3 currentScale = obj.localScale;
                 currentScale.z = v;
                 obj.localScale = currentScale;
@@ -162,6 +180,12 @@ namespace Platinio.TweenEngine
             Vector3Tween tween = new Vector3Tween(t.rotation.eulerAngles , axis * to , time, GenerateId());
             tween.SetOnUpdate(delegate(Vector3 v) 
             {
+                if (t == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+
                 t.rotation = Quaternion.Euler(v);
             });
             return ProcessTween(tween);
@@ -194,7 +218,16 @@ namespace Platinio.TweenEngine
         public BaseTween Fade(CanvasGroup cg, float to, float t)
         {
             ValueTween tween = new ValueTween(cg.alpha, to, t, GenerateId());
-            tween.SetOnUpdate(delegate (float v) { cg.alpha = v; });
+            tween.SetOnUpdate(delegate (float v) 
+            {
+                if (cg == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+
+                cg.alpha = v;
+            });
             return ProcessTween(tween);
         }
 
@@ -203,6 +236,12 @@ namespace Platinio.TweenEngine
             ValueTween tween = new ValueTween( image.color.a , to, t, GenerateId());
             tween.SetOnUpdate(delegate (float v) 
             {
+                if (image == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+
                 Color c = image.color;
                 c.a = v;
                 image.color = c;
@@ -225,6 +264,12 @@ namespace Platinio.TweenEngine
             ValueTween tween = new ValueTween(sprite.color.a, to, t, GenerateId());
             tween.SetOnUpdate(delegate (float v)
             {
+                if (sprite == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+
                 Color c = sprite.color;
                 c.a = v;
                 sprite.color = c;
@@ -248,14 +293,32 @@ namespace Platinio.TweenEngine
         public BaseTween ColorTween(SpriteRenderer sprite, Color to, float t)
         {
             ColorTween tween = new ColorTween(sprite.color, to, t, GenerateId());
-            tween.SetOnUpdate(delegate (Color c) { sprite.color = c; });
+            tween.SetOnUpdate(delegate (Color c) 
+            {
+                if (sprite == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+
+                sprite.color = c;
+            });
             return ProcessTween(tween);
         }
 
         public BaseTween ColorTween(Image image, Color to, float t)
         {
             ColorTween tween = new ColorTween(image.color, to, t, GenerateId());
-            tween.SetOnUpdate(delegate (Color c) { image.color = c; });
+            tween.SetOnUpdate(delegate (Color c) 
+            {
+                if (image == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+
+                image.color = c;
+            });
             return ProcessTween(tween);
         }
 
@@ -301,6 +364,12 @@ namespace Platinio.TweenEngine
             Vector3Tween tween = new Vector3Tween(obj.position , to , t , GenerateId());
             tween.SetOnUpdate((Vector3 pos) => 
             {
+                if (obj == null)
+                {
+                    m_tweens.Remove(tween);
+                    return;
+                }
+
                 obj.position = pos;
             });
             return ProcessTween(tween);
@@ -331,6 +400,9 @@ namespace Platinio.TweenEngine
 
             return Vector3Tween(new Vector3(rect.anchoredPosition.x , rect.anchoredPosition.y , 0.0f) , new Vector3(pos.x, pos.y , 0.0f) , t).SetOnUpdate((Vector3 value) =>
             {
+                if (rect == null)
+                    return;
+
                 rect.anchoredPosition = new Vector2(value.x , value.y);
             });
         }
