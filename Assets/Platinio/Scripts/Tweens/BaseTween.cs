@@ -17,6 +17,8 @@ namespace Platinio.TweenEngine
         protected float             m_duration          = 0.0f;
         protected float             m_currentTime       = 0.0f;
         protected Ease              m_ease              = Ease.Linear;
+        protected GameObject        m_owner             = null;
+        private float               m_timeSinceStart    = 0.0f;
         #endregion
 
         public int id { get { return m_id; } }
@@ -31,7 +33,7 @@ namespace Platinio.TweenEngine
         protected List<TimeEvent>   m_events            = new List<TimeEvent>();
         #endregion
 
-        private float m_timeSinceStart = 0.0f;
+        public GameObject Owner { get { return m_owner; } }
 
         
         /// <summary>
@@ -135,6 +137,13 @@ namespace Platinio.TweenEngine
         public virtual BaseTween SetOnUpdate(Action<Transform> action)
         {
             m_onUpdateTransform += action;
+            return this;
+        }
+
+        public virtual BaseTween SetOwner(GameObject owner)
+        {
+            m_owner = owner;
+            PlatinioTween.instance.ProcessConnection(this);
             return this;
         }
 

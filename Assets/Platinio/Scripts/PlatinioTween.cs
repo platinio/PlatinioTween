@@ -13,6 +13,7 @@ namespace Platinio.TweenEngine
     {
         #region PRIVATE
         private List<BaseTween> m_tweens = null;
+        private Dictionary<GameObject , List<int>> m_tweenConnections = new Dictionary<GameObject, List<int>>();
         private int m_counter = 0;
         #endregion
 
@@ -51,7 +52,30 @@ namespace Platinio.TweenEngine
             tween.SetOnComplete(delegate { m_tweens.Remove(tween); });
             m_tweens.Add(tween);
 
+            //if(tween.Owner != null)
+              //  ProcessConnection(tween);
+
             return tween;
+        }
+
+        public void ProcessConnection(BaseTween tween)
+        {
+            List<int> idList = null;
+
+            if (m_tweenConnections.TryGetValue(tween.Owner, out idList))
+            {
+                if (idList == null)
+                {
+                    idList = new List<int>();
+                }
+
+                idList.Add(tween.id);
+            }
+
+            else
+            {
+                m_tweenConnections[tween.Owner] = new List<int>() { tween.id };
+            }
         }
 
         public void CancelTween(int id)
@@ -64,6 +88,23 @@ namespace Platinio.TweenEngine
                     break;
                 }
             }
+        }
+
+        public void CancelTween(GameObject owner)
+        {
+            List<int> idList = null;
+
+            if (m_tweenConnections.TryGetValue(owner, out idList))
+            {
+                if(idList == null)
+                    return;
+
+                for (int n = 0 ; n < idList.Count ; n++)
+                {
+                    CancelTween(idList[n]);
+                }
+            }
+
         }
 
 
