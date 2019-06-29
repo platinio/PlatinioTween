@@ -5,6 +5,14 @@ using System.Linq;
 
 namespace Platinio.TweenEngine
 {
+    public enum UpdateMode
+    {
+        Update,
+        LateUpdate,
+        FixedUpdate
+    }
+
+
     /// <summary>
     /// Base tween class
     /// </summary>
@@ -17,8 +25,9 @@ namespace Platinio.TweenEngine
         protected float             m_duration          = 0.0f;
         protected float             m_currentTime       = 0.0f;
         protected Ease              m_ease              = Ease.Linear;
-        protected GameObject        m_owner             = null;
-        private float               m_timeSinceStart    = 0.0f;
+        protected UpdateMode        m_updateMode        = UpdateMode.Update;
+        protected GameObject        m_owner             = null;        
+        private float               m_timeSinceStart    = 0.0f;        
         #endregion
 
         public int id { get { return m_id; } }
@@ -34,6 +43,7 @@ namespace Platinio.TweenEngine
         #endregion
 
         public GameObject Owner { get { return m_owner; } }
+        public UpdateMode UpdateMode { get { return m_updateMode; } }
 
         
         /// <summary>
@@ -144,6 +154,12 @@ namespace Platinio.TweenEngine
         {
             m_owner = owner;
             PlatinioTween.instance.ProcessConnection(this);
+            return this;
+        }
+
+        public virtual BaseTween SetUpdateMode(UpdateMode updateMode)
+        {
+            m_updateMode = updateMode;
             return this;
         }
 

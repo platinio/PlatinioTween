@@ -28,9 +28,29 @@ namespace Platinio.TweenEngine
         {
             for (int n = 0; n < m_tweens.Count; n++)
             {
-                m_tweens[n].Update(Time.deltaTime);
+                if(m_tweens[n].UpdateMode == UpdateMode.Update)
+                    m_tweens[n].Update(Time.deltaTime);
             }
         }
+
+        private void LateUpdate()
+        {
+            for (int n = 0; n < m_tweens.Count; n++)
+            {
+                if (m_tweens[n].UpdateMode == UpdateMode.LateUpdate)
+                    m_tweens[n].Update( Time.deltaTime );
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            for (int n = 0; n < m_tweens.Count; n++)
+            {
+                if (m_tweens[n].UpdateMode == UpdateMode.FixedUpdate)
+                    m_tweens[n].Update( Time.fixedDeltaTime );
+            }
+        }
+
         #endregion
 
         private int GenerateId()
@@ -51,9 +71,6 @@ namespace Platinio.TweenEngine
         {
             tween.SetOnComplete(delegate { m_tweens.Remove(tween); });
             m_tweens.Add(tween);
-
-            //if(tween.Owner != null)
-              //  ProcessConnection(tween);
 
             return tween;
         }
