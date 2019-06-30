@@ -194,6 +194,30 @@ namespace Platinio.TweenEngine
             return ScaleX(obj.transform, value, t);
         }
 
+        public BaseTween ScaleX(RectTransform obj, float value, float t)
+        {
+            return ScaleX( obj.transform, value, t );
+        }
+
+        public BaseTween ScaleXAtSpeed(Transform obj , float value , float speed)
+        {
+            float time = Math.Abs( obj.localScale.x - value) / speed;
+            return ScaleX(obj , value , time);
+        }
+
+        public BaseTween ScaleXAtSpeed(GameObject obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.transform.localScale.x - value ) / speed;
+            return ScaleX( obj, value, time );
+        }
+
+        public BaseTween ScaleXAtSpeed(RectTransform obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.transform.localScale.x - value ) / speed;
+            return ScaleX( obj, value, time );
+        }
+
+
         public BaseTween ScaleY(Transform obj, float value, float t)
         {
             return ValueTween(obj.localScale.y, value, t).SetOnUpdate((float v) =>
@@ -209,8 +233,33 @@ namespace Platinio.TweenEngine
 
         public BaseTween ScaleY(GameObject obj, float value, float t)
         {
-            return ScaleY(obj.transform, value, t);
+            return ScaleY( obj.transform, value, t );
         }
+
+
+        public BaseTween ScaleY(RectTransform obj, float value, float t)
+        {
+            return ScaleY( obj.transform, value, t );
+        }
+
+        public BaseTween ScaleYAtSpeed(Transform obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.localScale.y - value ) / speed;
+            return ScaleY( obj, value, time );
+        }
+
+        public BaseTween ScaleYAtSpeed(GameObject obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.transform.localScale.y - value ) / speed;
+            return ScaleY( obj, value, time );
+        }
+
+        public BaseTween ScaleYAtSpeed(RectTransform obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.transform.localScale.y - value ) / speed;
+            return ScaleY( obj, value, time );
+        }
+               
 
         public BaseTween ScaleZ(Transform obj, float value, float t)
         {
@@ -229,6 +278,30 @@ namespace Platinio.TweenEngine
         {
             return ScaleZ(obj.transform, value, t);
         }
+
+        public BaseTween ScaleZ(RectTransform obj, float value, float t)
+        {
+            return ScaleZ( obj.transform, value, t );
+        }
+
+        public BaseTween ScaleZAtSpeed(Transform obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.localScale.z - value ) / speed;
+            return ScaleZ( obj, value, time );
+        }
+
+        public BaseTween ScaleZAtSpeed(GameObject obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.transform.localScale.z - value ) / speed;
+            return ScaleZ( obj, value, time );
+        }
+
+        public BaseTween ScaleZAtSpeed(RectTransform obj, float value, float speed)
+        {
+            float time = Math.Abs( obj.transform.localScale.z - value ) / speed;
+            return ScaleZ( obj, value, time );
+        }
+
         #endregion
 
         #region ROTATE_TWEENS
@@ -268,9 +341,21 @@ namespace Platinio.TweenEngine
             return Fade(cg, 0.0f, t);
         }
 
+        public BaseTween FadeOutAtSpeed(CanvasGroup cg , float speed)
+        {
+            float t = cg.alpha / speed;
+            return Fade(cg , 0.0f , t);
+        }
+        
         public BaseTween FadeIn(CanvasGroup cg, float t)
         {
             return Fade(cg , 1.0f , t);           
+        }
+
+        public BaseTween FadeInAtSpeed(CanvasGroup cg, float speed)
+        {
+            float t = Mathf.Abs( cg.alpha - 1.0f) / speed;
+            return Fade( cg, 1.0f, t );
         }
 
         public BaseTween Fade(CanvasGroup cg, float to, float t)
@@ -287,6 +372,12 @@ namespace Platinio.TweenEngine
                 cg.alpha = v;
             });
             return ProcessTween(tween);
+        }
+
+        public BaseTween FadeAtSpeed(CanvasGroup cg , float to , float speed)
+        {
+            float t = Math.Abs( cg.alpha - to) / speed;
+            return Fade( cg, to , t );
         }
 
         public BaseTween Fade(Image image, float to, float t)
@@ -307,14 +398,32 @@ namespace Platinio.TweenEngine
             return ProcessTween(tween);
         }
 
+        public BaseTween FadeAtSpeed(Image img, float to, float speed)
+        {
+            float t = Math.Abs( img.color.a - to ) / speed;
+            return Fade( img, to, t );
+        }
+
         public BaseTween FadeOut(Image image , float t)
         {
             return Fade(image , 0.0f , t);
         }
 
+        public BaseTween FadeOutAtSpeed(Image img, float speed)
+        {
+            float t = img.color.a / speed;
+            return Fade( img , 0.0f, t );
+        }
+
         public BaseTween FadeIn(Image image, float t)
         {
             return Fade(image, 1.0f, t);
+        }
+
+        public BaseTween FadeInAtSpeed(Image img, float speed)
+        {
+            float t = Mathf.Abs( img.color.a - 1.0f ) / speed;
+            return Fade( img, 1.0f, t );
         }
 
         public BaseTween Fade(SpriteRenderer sprite, float to, float t)
@@ -335,9 +444,21 @@ namespace Platinio.TweenEngine
             return ProcessTween(tween);
         }
 
+        public BaseTween FadeAtSpeed(SpriteRenderer sprite, float to, float speed)
+        {
+            float t = Math.Abs( sprite.color.a - to ) / speed;
+            return Fade( sprite, to, t );
+        }
+
         public BaseTween FadeOut(SpriteRenderer sprite, float t)
         {
             return Fade(sprite, 0.0f, t);
+        }
+
+        public BaseTween FadeOutAtSpeed(SpriteRenderer sprite, float speed)
+        {
+            float t = sprite.color.a / speed;
+            return Fade( sprite, 0.0f, t );
         }
 
         public BaseTween FadeIn(SpriteRenderer sprite, float t)
@@ -345,9 +466,26 @@ namespace Platinio.TweenEngine
             return Fade(sprite, 1.0f, t);
         }
 
+        public BaseTween FadeInAtSpeed(SpriteRenderer srpite, float speed)
+        {
+            float t = Mathf.Abs( srpite.color.a - 1.0f ) / speed;
+            return Fade( srpite, 1.0f, t );
+        }
+
         #endregion
 
         #region COLOR_TWEEN
+
+        private Vector3 ColorToVector3(Color c)
+        {
+            return new Vector3( c.r , c.g, c.b );
+        }
+
+        private float CalculateColorDistance(Color a , Color b)
+        {
+            return Vector3.Distance( ColorToVector3(a) , ColorToVector3(b) );
+        }
+
         public BaseTween ColorTween(SpriteRenderer sprite, Color to, float t)
         {
             ColorTween tween = new ColorTween(sprite.color, to, t, GenerateId());
@@ -362,6 +500,12 @@ namespace Platinio.TweenEngine
                 sprite.color = c;
             });
             return ProcessTween(tween);
+        }
+
+        public BaseTween ColorTweenAtSpeed(SpriteRenderer sprite , Color to , float speed)
+        {
+            float t = CalculateColorDistance(sprite.color , to) / speed;
+            return ColorTween(sprite , to , t);
         }
 
         public BaseTween ColorTween(Image image, Color to, float t)
@@ -380,25 +524,50 @@ namespace Platinio.TweenEngine
             return ProcessTween(tween);
         }
 
+        public BaseTween ColorTweenAtSpeed(Image img, Color to, float speed)
+        {
+            float t = CalculateColorDistance( img.color, to ) / speed;
+            return ColorTween( img, to, t );
+        }
+
         public BaseTween ColorTween(Color from, Color to, float t)
         {
             ColorTween tween = new ColorTween(from, to, t, GenerateId());
             return ProcessTween(tween);
         }
+
+        public BaseTween ColorTweenAtSpeed(Color from, Color to, float speed)
+        {
+            float t = CalculateColorDistance( from, to ) / speed;
+            return ColorTween( from, to, t );
+        }
         #endregion
 
         #region VECTOR_TWEEN
-        public BaseTween Vector2Tween(Vector2 from, Vector2 to, float t)
+        public BaseTween VectorTween(Vector2 from, Vector2 to, float t)
         {
             Vector2Tween tween = new Vector2Tween(from, to, t, GenerateId());
             return ProcessTween(tween);
         }
 
-        public BaseTween Vector3Tween(Vector3 from, Vector3 to, float t)
+        public BaseTween VectorTweenAtSpeed(Vector2 from, Vector2 to, float speed)
+        {
+            float t = Vector2.Distance(from , to) / speed;
+            return VectorTween(from , to , t);
+        }
+
+        public BaseTween VectorTween(Vector3 from, Vector3 to, float t)
         {
             Vector3Tween tween = new Vector3Tween(from, to, t, GenerateId());
             return ProcessTween(tween);
         }
+
+        public BaseTween VectorTweenAtSpeed(Vector3 from, Vector3 to, float speed)
+        {
+            float t = Vector3.Distance( from, to ) / speed;
+            return VectorTween( from, to, t );
+        }
+
         #endregion
 
 
@@ -408,6 +577,12 @@ namespace Platinio.TweenEngine
             ValueTween tween = new ValueTween(from , to , t , GenerateId());
             return ProcessTween(tween);
         }
+
+        public BaseTween ValueTweenAtSpeed(float from , float to , float speed)
+        {
+            float t = Math.Abs(from - to) / speed;
+            return ValueTween(from , to , t);
+        }
         #endregion
 
         #region MOVE_TWEEN
@@ -415,6 +590,12 @@ namespace Platinio.TweenEngine
         {
             MoveTween tween = new MoveTween(obj , to , t , GenerateId());
             return ProcessTween(tween);
+        }
+
+        public BaseTween MoveAtSpeed(Transform obj, Transform to, float speed)
+        {
+            float t = Vector3.Distance(obj.position , to.position) / speed;
+            return Move(obj , to , t);
         }
 
         public BaseTween Move(Transform obj , Vector3 to , float t)
@@ -433,9 +614,22 @@ namespace Platinio.TweenEngine
             return ProcessTween(tween);
         }
 
+        public BaseTween MoveAtSpeed(Transform obj, Vector3 to, float speed )
+        {            
+            float t = Vector3.Distance( obj.position, to ) / speed;
+            return Move( obj, to, t );
+        }
+
+
         public BaseTween Move(GameObject obj , Transform to , float t)
         {
             return Move(obj.transform , to , t);
+        }
+
+        public BaseTween MoveAtSpeed(GameObject obj, Transform to, float speed)
+        {
+            float t = Vector3.Distance( obj.transform.position, to.position ) / speed;
+            return Move( obj, to, t );
         }
 
         public BaseTween Move(GameObject obj, Vector3 to, float t)
@@ -443,9 +637,21 @@ namespace Platinio.TweenEngine
             return Move(obj.transform, to, t);
         }
 
+        public BaseTween MoveAtSpeed(GameObject obj, Vector3 to, float speed)
+        {
+            float t = Vector3.Distance( obj.transform.position, to ) / speed;
+            return Move( obj, to, t );
+        }
+
         public BaseTween Move(GameObject obj, GameObject to, float t)
         {
             return Move(obj.transform, to.transform, t);
+        }
+
+        public BaseTween MoveAtSpeed(GameObject obj, GameObject to, float speed)
+        {
+            float t = Vector3.Distance( obj.transform.position, to.transform.position ) / speed;
+            return Move( obj, to, t );
         }
 
         public BaseTween Move(Transform obj, GameObject to, float t)
@@ -453,16 +659,28 @@ namespace Platinio.TweenEngine
             return Move(obj, to.transform, t);
         }
 
+        public BaseTween MoveAtSpeed(Transform obj, GameObject to, float speed)
+        {
+            float t = Vector3.Distance( obj.position, to.transform.position ) / speed;
+            return Move( obj, to, t );
+        }
+
         public BaseTween Move(RectTransform rect , Vector2 pos , float t)
         {
 
-            return Vector3Tween(new Vector3(rect.anchoredPosition.x , rect.anchoredPosition.y , 0.0f) , new Vector3(pos.x, pos.y , 0.0f) , t).SetOnUpdate((Vector3 value) =>
+            return VectorTween(new Vector3(rect.anchoredPosition.x , rect.anchoredPosition.y , 0.0f) , new Vector3(pos.x, pos.y , 0.0f) , t).SetOnUpdate((Vector3 value) =>
             {
                 if (rect == null)
                     return;
 
                 rect.anchoredPosition = new Vector2(value.x , value.y);
             });
+        }
+
+        public BaseTween MoveAtSpeed(RectTransform rect , Vector2 pos , float speed)
+        {
+            float t = Vector2.Distance( new Vector2( rect.anchoredPosition.x , rect.anchoredPosition.y ), new Vector2( rect.anchoredPosition.x , rect.anchoredPosition.y ) ) / speed;
+            return Move( rect, pos, t );
         }
 
         //use this to position UI in absolute coordenates
