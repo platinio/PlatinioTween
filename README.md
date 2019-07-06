@@ -68,4 +68,31 @@ Will result in:
 Animating UI Elements
 ==============
 
-Ok it is really usefull create tweens via code, but the real stuff is to create UI Animations.
+Ok it is really usefull create tweens via code, but the real stuff is to create UI Animations, if you has been try it before you know the hard stuff is to moving UI around because RectTransform positions are always relative to his anchor, this meas that say.
+
+```c#
+rectTransform.anchoredPosition = new Vector2(100.0f , 100.0f);
+```
+
+is diferent for every single element that has diferent anchors configuration, one way to made it "works" is to use the same anchor position for every single element that we want to animate, but if you has been try it you know that it creates more problems that it actually solve.
+
+So i create a function to convert any anchoredPosition for any RectTransform to a global coordinate system, so you can move stuff around as precise as you want wiutout touching the anchors.
+
+Use this as a giude to move stuff around inside a canvas.
+
+     0.0 , 1.0 _______________________1.0 , 1.0
+              |                      |
+              |                      |                  
+              |                      |
+              |                      |
+    0.0 , 0.0 |______________________| 1.0 , 0.0
+
+Moving a Popup Example
+==============
+```c#
+PlatinioTween.instance.MoveUI(rectTransform, new Vector2(0.5f , 0.5f), canvasRect, 0.5f).SetEase(Ease.EaseOutBounce);
+```
+
+So as we know from the previus guide (0.5 , 0.5) is the center of our canvas in the global coordinate system, so the previus code wil result in.
+
+![](popupexample.gif)
