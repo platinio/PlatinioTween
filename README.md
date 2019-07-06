@@ -96,3 +96,6 @@ PlatinioTween.instance.MoveUI(rectTransform, new Vector2(0.5f , 0.5f), canvasRec
 So as we know from the previus guide (0.5 , 0.5) is the center of our canvas in the global coordinate system, so the previus code wil result in.
 
 ![](popupexample.gif)
+
+And then mixing stuff you can get a little creative.
+![](uiexample.gif)
