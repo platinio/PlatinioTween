@@ -49,36 +49,18 @@ namespace Platinio
             Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
             return Vector2.Scale( point - centerAnchor, canvas.rect.size ) + Vector2.Scale( rect.rect.size, pivot * 0.5f );
         }
+      
+        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, RectTransform canvas)
+        {
+            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;            
+            return new Vector2( rect.anchoredPosition.x / canvas.sizeDelta.x, rect.anchoredPosition.y / canvas.sizeDelta.y ) + centerAnchor;
+        }        
 
-        public static Vector2 FromAbsolutePositionToAnchoredPosition(this RectTransform rect, Vector2 point, Vector2 pivot)
+        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect)
         {
             Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
-            return Vector2.Scale( point - centerAnchor, RequestCanvas().rect.size ) + Vector2.Scale( rect.rect.size, pivot * 0.5f );
-        }
-
-        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, RectTransform canvas , PivotPreset anchor = PivotPreset.MiddleCenter)
-        {
-            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
-            return new Vector2( rect.anchoredPosition.x / canvas.rect.size.x, rect.anchoredPosition.y / canvas.rect.size.y ) + Vector2.Scale( rect.rect.size, GetAnchorOffSet( anchor ) );
-        }
-
-        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, RectTransform canvas , Vector2 pivot)
-        {
-            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
-            return new Vector2( rect.anchoredPosition.x / canvas.rect.size.x, rect.anchoredPosition.y / canvas.rect.size.y ) + Vector2.Scale( rect.rect.size, pivot * 0.5f);
-        }
-
-        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, PivotPreset anchor = PivotPreset.MiddleCenter)
-        {
-            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
-            return new Vector2( rect.anchoredPosition.x / RequestCanvas().rect.size.x, rect.anchoredPosition.y / RequestCanvas().rect.size.y ) + Vector2.Scale( rect.rect.size, GetAnchorOffSet( anchor ) );
-        }
-
-        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, Vector2 pivot)
-        {
-            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
-            return new Vector2( rect.anchoredPosition.x / RequestCanvas().rect.size.x, rect.anchoredPosition.y / RequestCanvas().rect.size.y ) + Vector2.Scale( rect.rect.size, pivot * 0.5f );
-        }
+            return new Vector2( rect.anchoredPosition.x / RequestCanvas().sizeDelta.x, rect.anchoredPosition.y / RequestCanvas().sizeDelta.y ) + centerAnchor;
+        }       
 
         private static RectTransform RequestCanvas()
         {
