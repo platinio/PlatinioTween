@@ -85,7 +85,7 @@ namespace Platinio
 
         private Vector2 GetRandomPoint()
         {
-            return PlatinioTween.FromAbsolutePositionToCanvasPosition(new Vector2( Random.Range(0.01f , 0.98f) , Random.Range(0.01f, 0.98f)) , m_thisRect , m_canvas );
+            return m_thisRect.FromAbsolutePositionToAnchoredPosition(new Vector2( Random.Range(0.01f , 0.98f) , Random.Range(0.01f, 0.98f)) , m_canvas );
         }
 
         private void CancelTween()

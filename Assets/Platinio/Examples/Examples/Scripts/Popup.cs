@@ -21,7 +21,7 @@ namespace Platinio
         {
             m_thisRect = GetComponent<RectTransform>();   
             
-            m_thisRect.anchoredPosition = PlatinioTween.FromAbsolutePositionToCanvasPosition(m_startPosition , m_thisRect , m_canvas);
+            m_thisRect.anchoredPosition = m_thisRect.FromAbsolutePositionToAnchoredPosition(m_startPosition , m_canvas);
         }
 
         private void Show()

@@ -19,7 +19,7 @@ namespace Platinio
 
         private void Start()
         {
-            m_startPosition = PlatinioTween.FromCanvasPositionToAbsolutePosition(m_hideMenu , m_canvas);            
+            m_startPosition = m_hideMenu.FromAnchoredPositionToAbsolutePosition(m_canvas);            
         }
 
         private void Show()
