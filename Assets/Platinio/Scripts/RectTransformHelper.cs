@@ -50,17 +50,47 @@ namespace Platinio
             return Vector2.Scale( point - centerAnchor, canvas.rect.size ) + Vector2.Scale( rect.rect.size, pivot * 0.5f );
         }
       
-        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, RectTransform canvas)
-        {
-            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;            
-            return new Vector2( rect.anchoredPosition.x / canvas.sizeDelta.x, rect.anchoredPosition.y / canvas.sizeDelta.y ) + centerAnchor;
-        }        
-
-        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect)
+        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, RectTransform canvas , PivotPreset anchor = PivotPreset.MiddleCenter)
         {
             Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
-            return new Vector2( rect.anchoredPosition.x / RequestCanvas().sizeDelta.x, rect.anchoredPosition.y / RequestCanvas().sizeDelta.y ) + centerAnchor;
-        }       
+            Vector2 anchoredPosition = rect.anchoredPosition;
+            anchoredPosition -= Vector2.Scale( rect.rect.size, GetAnchorOffSet( anchor ) );
+            return new Vector2( anchoredPosition.x/ canvas.sizeDelta.x, anchoredPosition.y / canvas.sizeDelta.y ) + centerAnchor ;
+        }        
+
+        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect , PivotPreset anchor = PivotPreset.MiddleCenter)
+        {
+            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
+            Vector2 anchoredPosition = rect.anchoredPosition;
+            anchoredPosition -= Vector2.Scale( rect.rect.size, GetAnchorOffSet( anchor ) );
+            return new Vector2( anchoredPosition.x / RequestCanvas().sizeDelta.x, anchoredPosition.y / RequestCanvas().sizeDelta.y ) + centerAnchor;
+        }
+
+        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, RectTransform canvas, Vector2 pivot)
+        {
+            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
+            Vector2 anchoredPosition = rect.anchoredPosition;
+            anchoredPosition -= Vector2.Scale( rect.rect.size, pivot * 0.5f );
+            return new Vector2( anchoredPosition.x / canvas.sizeDelta.x, anchoredPosition.y / canvas.sizeDelta.y ) + centerAnchor;
+        }
+
+        public static Vector2 FromAnchoredPositionToAbsolutePosition(this RectTransform rect, Vector2 pivot)
+        {
+            Vector2 centerAnchor = ( rect.anchorMax + rect.anchorMin ) * 0.5f;
+            Vector2 anchoredPosition = rect.anchoredPosition;
+            anchoredPosition -= Vector2.Scale( rect.rect.size, pivot * 0.5f );
+            return new Vector2( anchoredPosition.x / RequestCanvas().sizeDelta.x, anchoredPosition.y / RequestCanvas().sizeDelta.y ) + centerAnchor;
+        }
+
+        public static Vector2 FromRectSizeToAbsoluteSize(this RectTransform rect , RectTransform canvas)
+        {
+            return new Vector2( rect.rect.size.x / canvas.sizeDelta.x, rect.rect.size.y / canvas.sizeDelta.y );
+        }
+
+        public static Vector2 FromRectSizeToAbsoluteSize(this RectTransform rect)
+        {
+            return new Vector2( rect.rect.size.x / RequestCanvas().sizeDelta.x, rect.rect.size.y / RequestCanvas().sizeDelta.y );
+        }
 
         private static RectTransform RequestCanvas()
         {

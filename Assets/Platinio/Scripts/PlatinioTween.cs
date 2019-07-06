@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using Platinio;
 
 namespace Platinio.TweenEngine
 {
@@ -702,12 +703,13 @@ namespace Platinio.TweenEngine
         /// <param name="t"></param>
         /// <returns></returns>        
 
-        public BaseTween MoveUI(RectTransform rect , Vector2 absolutePosition , RectTransform canvas , float t)
+        public BaseTween MoveUI(RectTransform rect , Vector2 absolutePosition , RectTransform canvas , float t , PivotPreset pivotPreset = PivotPreset.MiddleCenter)
         {
-            Vector2 pos = rect.FromAbsolutePositionToAnchoredPosition( absolutePosition, canvas );
+            Vector2 pos = rect.FromAbsolutePositionToAnchoredPosition( absolutePosition, canvas , pivotPreset);
 
             return Move(rect , pos , t);
         }
+
 
         public BaseTween MoveUIAtSpeed(RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float speed)
         {
