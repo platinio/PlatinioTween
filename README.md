@@ -99,3 +99,24 @@ So as we know from the previus guide (0.5 , 0.5) is the center of our canvas in 
 
 And then mixing stuff you can get a little creative.
 ![](uiexample.gif)
+
+Being more precise
+==============
+
+When comes to UI precision is all what matters, so in order to be more precise you can move around UI elements overriding his pivot, example:
+
+```c#
+PlatinioTween.instance.MoveUI(rectTransform , Vector2.one, canvas , 0.5f , PivotPreset.UpperRight);
+```
+
+So this code will produce this:
+
+![](anchorexample.gif)
+
+And you can even use your custom pivot.
+
+```c#
+PlatinioTween.instance.MoveUI(rectTransform , Vector2.one, canvas , 0.5f , new Vector2(0.5f , 0.8f));
+```
+More and More about Tweens
+==============
