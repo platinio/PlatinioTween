@@ -50,7 +50,20 @@ Using Eases
 ==============
 The best way to exaplain a Ease is just to see it on action :)
 
+```c#
+PlatinioTween.instance.Move(transform , Vector3.zero , 2.0f).SetEase(Ease.EaseOutElastic);
+```
+Will result in:
+
 ![](easeoutelastic.gif)
+
+```c#
+PlatinioTween.instance.Move(transform , Vector3.zero , 2.0f).SetEase( Ease.EaseOutBounce);
+```
+Will result in:
+
+![](easeoutbounce.gif)
+
 
 Animating UI Elements
 ==============
