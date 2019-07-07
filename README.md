@@ -9,7 +9,18 @@ This is a Unity3D Asset that let you create animations by code, and works very w
 
 Getting started
 ==============
+Just download this repo and remember to use.
 
+```c#
+using Platinio.TweenEngine;
+```
+
+and if you want to access directly the RectTransformHelper
+
+```c#
+using Platinio;
+```
+and you are ready to go.
 
 Creating a tween
 ==============
@@ -43,12 +54,11 @@ IEnumerator CO_TweenRoutine()
     PlatinioTween.instance.CancelTween(id);
 }
 ```
-
-this will do the same as cancael using the GameObject.
+this will do the same as cancel using the GameObject.
 
 Using Eases
 ==============
-The best way to exaplain a Ease is just to see it on action :)
+The best way to explain a Ease is just to see it on action :)
 
 ```c#
 PlatinioTween.instance.Move(transform , Vector3.zero , 2.0f).SetEase(Ease.EaseOutElastic);
@@ -68,17 +78,17 @@ Will result in:
 Animating UI Elements
 ==============
 
-Ok it is really usefull create tweens via code, but the real stuff is to create UI Animations, if you has been try it before you know the hard stuff is to moving UI around because RectTransform positions are always relative to his anchor, this meas that say.
+Ok it is really usefull create tweens via code, but the real stuff is to create UI Animations, if you has been try it before then you know how hard it can be moving UI around because RectTransform positions are always relative to his anchor, so it means that.
 
 ```c#
 rectTransform.anchoredPosition = new Vector2(100.0f , 100.0f);
 ```
 
-is diferent for every single element that has diferent anchors configuration, one way to made it "works" is to use the same anchor position for every single element that we want to animate, but if you has been try it you know that it creates more problems that it actually solve.
+is diferent for every single element that has diferent anchors configuration, one way to made it "works" is to use the same anchor position for every single element that we want to animate, but if you has been try it you know that it creates more problems.
 
-So i create a function to convert any anchoredPosition for any RectTransform to a global coordinate system, so you can move stuff around as precise as you want wiutout touching the anchors.
+So i made a function to convert any anchoredPosition for any RectTransform to a global coordinate system, so you can move stuff around as precise as you want without touching the anchors.
 
-Use this as a giude to move stuff around inside a canvas.
+Use this as a guide to move stuff around inside a canvas.
 
      0.0 , 1.0 _______________________1.0 , 1.0
               |                      |
@@ -93,7 +103,7 @@ Moving a Popup Example
 PlatinioTween.instance.MoveUI(rectTransform, new Vector2(0.5f , 0.5f), canvasRect, 0.5f).SetEase(Ease.EaseOutBounce);
 ```
 
-So as we know from the previus guide (0.5 , 0.5) is the center of our canvas in the global coordinate system, so the previus code wil result in.
+So as we know from the previous guide (0.5 , 0.5) is the center of our canvas in the global coordinate system, so the previous code will result in.
 
 ![](popupexample.gif)
 
@@ -103,7 +113,7 @@ And then mixing stuff you can get a little creative.
 Being more precise
 ==============
 
-When comes to UI precision is all what matters, so in order to be more precise you can move around UI elements overriding his pivot, example:
+When comes to animating UI, the precision is all what matters, so in order to be more precise, you can move UI elements using your own pivot, example:
 
 ```c#
 PlatinioTween.instance.MoveUI(rectTransform , Vector2.one, canvas , 0.5f , PivotPreset.UpperRight);
@@ -113,10 +123,149 @@ So this code will produce this:
 
 ![](anchorexample.gif)
 
-And you can even use your custom pivot.
+And you can even use a custom pivot.
 
 ```c#
 PlatinioTween.instance.MoveUI(rectTransform , Vector2.one, canvas , 0.5f , new Vector2(0.5f , 0.8f));
 ```
 More and More about Tweens
 ==============
+
+Scaling
+==============
+
+```c#
+PlatinioTween.instance.ScaleTween(transform , Vector3.one * 10.0f , 2.0f);
+```
+
+```c#
+PlatinioTween.instance.ScaleX(transform , 10.0f , 2.0f);
+```
+
+```c#
+PlatinioTween.instance.ScaleTweenAtSpeed(transform , Vector3.one * 10.0f , 10.0f);
+```
+
+Rotating
+==============
+
+```c#
+PlatinioTween.instance.RotateTween(transform , Vector3.up, 90.0f , 10.0f);
+```
+
+
+Fading
+==============
+
+You can fade Images, CanvasGroup and Sprites 
+
+```c#
+//fade to 0.0f in 2 seconds
+PlatinioTween.instance.FadeOut(canvasGroup , 2.0f);
+```
+
+```c#
+//fade to 1.0f in 2 seconds
+PlatinioTween.instance.FadeIn(canvasGroup , 2.0f);
+```
+
+Color
+==============
+
+You can use tween to change colors, moving slowly from Color A to Color B , or you can use directly Images or Sprites
+
+```c#
+PlatinioTween.instance.ColorTween(colorA , colorB , 2.0f);
+```
+
+```c#
+PlatinioTween.instance.ColorTween(sprite , colorB , 2.0f);
+```
+
+Vector2 and Vector3
+==============
+
+```c#
+PlatinioTween.instance.VectorTween(Vector3.zero , Vector3.one , 2.0f);
+```
+
+Value 
+==============
+
+```c#
+PlatinioTween.instance.ValueTween(0.0f , 1.0f , 2.0f);
+```
+
+Moving
+==============
+at this point should be important to note, that all the tweens have a variant for use speed instead of time, very handy sometimes.
+
+```c#
+//move transform A to transform B in 2.0 seconds
+PlatinioTween.instance.Move(transformA , transformB, 2.0f);
+```
+
+```c#
+//move transform A to transform B using a constant speed of 10.0
+PlatinioTween.instance.MoveAtSpeed(transformA , transformB, 10.0f);
+```
+
+Moving UI
+==============
+
+better read Animating UI Elements just scroll up.
+
+
+We love to have control
+==============
+yes we love to have control for everything or at least we try, so you can do a lot of stuff in order to have more control over tweens.
+
+SetEase
+==============
+Read Ease section at the start
+```c#
+PlatinioTween.instance.Move(transform , Vector3.zero, 1.0f).SetEase(Ease.EaseInQuint);
+```
+
+SetEvent
+==============
+you can set events that will be called in a specified time of the animation.
+```c#
+//call do something just at the midle of the animation
+PlatinioTween.instance.Move(transform , Vector3.zero, 5.0f).SetEvent(DoSomething() , 5.0f / 2.0f);
+```
+
+SetOnComplete
+==============
+You can set a delegate to be called just at the end of the animation.
+```c#
+PlatinioTween.instance.Move(transform , Vector3.zero, 1.0f).SetOnComplete(DoSomething());
+```
+
+SetDelay
+==============
+Set a delay at the start of the animation.
+```c#
+PlatinioTween.instance.Move(transform , Vector3.zero, 1.0f).SetDelay(2.0f);
+```
+
+SetOnUpdate
+==============
+SetOnUpdate is little special, it depends on the tween you are calling and you can see how it updates every frame.
+```c#
+PlatinioTween.instance.ColorTween(ColorA , Colorb, 1.0f).SetOnUpdate(delegate(Color v)
+{
+    image.color = v;
+});
+```
+
+```c#
+PlatinioTween.instance.ValueTween(valueA , valueB, 1.0f).SetOnUpdate(delegate(float v)
+{
+    Debug.Log(v);
+});
+```
+
+Final
+==============
+If you are interested on this keep an eye on [This](https://github.com/platinio/UnityUIAnimationFramework), i am porting this code into the Unity Timeline so you can create UI animations using visual tools, how awesome would that be?
