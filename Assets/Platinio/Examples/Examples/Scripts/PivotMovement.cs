@@ -10,7 +10,6 @@ namespace Platinio
         [SerializeField] private Vector2 finalPos = Vector2.zero;
         [SerializeField] private PivotPreset anchor = PivotPreset.UpperRight;
         [SerializeField] private RectTransform canvas = null;
-        
 
         private void Start()
         {

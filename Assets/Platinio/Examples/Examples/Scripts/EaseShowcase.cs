@@ -7,12 +7,20 @@ namespace Platinio.TweenEngine
     public class EaseShowcase : MonoBehaviour
     {
         [SerializeField] private Ease ease;
-        [SerializeField] private float t;
+        [SerializeField] private float time;
         [SerializeField] private Vector3 pos;
 
-        private void Awake()
+        private Vector3 startPosition = Vector3.zero;
+
+        private void Start()
         {
-            PlatinioTween.instance.Move(transform , pos , t).SetEase(ease);
+            startPosition = transform.position;
+            Move();
+        }
+        private void Move()
+        {
+            transform.position = startPosition;
+            PlatinioTween.instance.Move(transform, pos, time).SetEase(ease).SetOnComplete(Move);
         }
        
     }
