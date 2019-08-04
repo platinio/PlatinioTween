@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Platinio.TweenEngine;
 
 namespace Platinio
@@ -11,9 +9,21 @@ namespace Platinio
         [SerializeField] private PivotPreset anchor = PivotPreset.UpperRight;
         [SerializeField] private RectTransform canvas = null;
 
+        private RectTransform thisRectTransform = null;
+        private Vector2 startPosition = Vector2.zero;
+
         private void Start()
+        {            
+            thisRectTransform = GetComponent<RectTransform>();
+            startPosition = thisRectTransform.anchoredPosition;
+
+            Move();
+        }
+
+        private void Move()
         {
-            PlatinioTween.instance.MoveUI(GetComponent<RectTransform>() , finalPos, canvas , 0.5f , anchor);
+            thisRectTransform.anchoredPosition = startPosition;
+            PlatinioTween.instance.MoveUI( thisRectTransform, finalPos, canvas, 0.5f, anchor ).SetOnComplete(Move).SetDelay(1.0f);
         }
       
     }
