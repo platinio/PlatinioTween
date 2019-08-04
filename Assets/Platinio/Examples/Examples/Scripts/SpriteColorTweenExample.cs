@@ -25,7 +25,7 @@ namespace Demo
             if (m_tweenID != -1)
                 PlatinioTween.instance.CancelTween(m_tweenID);
 
-             m_tweenID = PlatinioTween.instance.ColorTween(m_sprite, m_selectColor, m_time).id;
+             m_tweenID = PlatinioTween.instance.ColorTween(m_sprite, m_selectColor, m_time).ID;
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -33,7 +33,7 @@ namespace Demo
             if (m_tweenID != -1)
                 PlatinioTween.instance.CancelTween(m_tweenID);
 
-            m_tweenID = PlatinioTween.instance.ColorTween(m_sprite, m_normalColor, m_time).id;
+            m_tweenID = PlatinioTween.instance.ColorTween(m_sprite, m_normalColor, m_time).ID;
         }
     }
 

@@ -6,19 +6,19 @@ namespace Platinio.TweenEngine
     public class MoveTween : BaseTween
     {
         #region PRIVATE
-        private Transform m_object      = null;
-        private Transform m_to          = null;
-        private Vector3   m_initialPos  = Vector3.zero;
+        private Transform obj = null;
+        private Transform to = null;
+        private Vector3 initialPos = Vector3.zero;
         #endregion
 
         #region PUBLIC
-        public MoveTween(Transform obj , Transform to, float t, int id)
+        public MoveTween(Transform obj, Transform to, float t, int id)
         {
-            m_object        = obj;
-            m_to            = to;
-            m_duration      = t;
-            m_initialPos    = obj.position; 
-            m_id            = id;
+            this.obj = obj;
+            this.to = to;
+            this.duration = t;
+            this.initialPos = obj.position;
+            this.id = id;
         }
 
         /// <summary>
@@ -26,40 +26,40 @@ namespace Platinio.TweenEngine
         /// </summary>
         public override void Update(float deltaTime)
         {
-           
+
             //wait a delay
-            if (m_delay > 0.0f)
+            if (delay > 0.0f)
             {
-                m_delay -= deltaTime;
+                delay -= deltaTime;
                 return;
             }
 
-            base.Update(deltaTime);
+            base.Update( deltaTime );
 
             //start counting time
-            m_currentTime += deltaTime;
+            currentTime += deltaTime;
 
             //if time ends
-            if (m_currentTime >= m_duration)
+            if (currentTime >= duration)
             {
-                m_object.position = m_to.position;
-                               
+                obj.position = to.position;
 
-                if (m_onUpdateTransform != null)
-                    m_onUpdateTransform(m_object);
 
-                m_onComplete();
+                if (onUpdateTransform != null)
+                    onUpdateTransform( obj );
+
+                onComplete();
                 return;
             }
-            
+
             //get new value
-            Vector3 change = m_to.position - m_initialPos;
-            m_object.position = Equations.ChangeVector(m_currentTime, m_initialPos, change, m_duration, m_ease);
-                        
+            Vector3 change = to.position - initialPos;
+            obj.position = Equations.ChangeVector( currentTime, initialPos, change, duration, ease );
+
             //call update if we have it
-            if (m_onUpdateTransform != null)
-                m_onUpdateTransform(m_object);
-                
+            if (onUpdateTransform != null)
+                onUpdateTransform( obj );
+
         }
         #endregion        
     }

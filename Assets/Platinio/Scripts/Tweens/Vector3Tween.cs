@@ -6,17 +6,17 @@ namespace Platinio.TweenEngine
     public class Vector3Tween : BaseTween
     {
         #region PRIVATE
-        private Vector3 m_from  = Vector3.zero;
-        private Vector3 m_to    = Vector3.zero;
+        private Vector3 from  = Vector3.zero;
+        private Vector3 to    = Vector3.zero;
         #endregion
 
         #region PUBLIC
         public Vector3Tween(Vector3 from, Vector3 to, float t , int id)
         {
-            m_from      = from;
-            m_to        = to;
-            m_duration  = t;
-            m_id        = id;
+            this.from      = from;
+            this.to        = to;
+            this.duration  = t;
+            this.id        = id;
         }
 
         /// <summary>
@@ -26,35 +26,35 @@ namespace Platinio.TweenEngine
         {
             
             //wait a delay
-            if (m_delay > 0.0f)
+            if (delay > 0.0f)
             {
-                m_delay -= deltaTime;
+                delay -= deltaTime;
                 return;
             }
 
             base.Update(deltaTime);
 
             //start counting time
-            m_currentTime += deltaTime;
+            currentTime += deltaTime;
 
             //if time ends
-            if (m_currentTime >= m_duration)
+            if (currentTime >= duration)
             {
                 
-                if(m_onUpdateVector3 != null)
-                    m_onUpdateVector3(m_to);
+                if(onUpdateVector3 != null)
+                    onUpdateVector3(to);
 
-                m_onComplete();
+                onComplete();
                 return;
             }
 
             //get new value
-            Vector3 change  = m_to - m_from;
-            Vector3 value   = Equations.ChangeVector(m_currentTime, m_from, change, m_duration, m_ease);
+            Vector3 change  = to - from;
+            Vector3 value   = Equations.ChangeVector(currentTime, from, change, duration, ease);
 
             //call update if we have it
-            if (m_onUpdateVector3 != null)
-                m_onUpdateVector3(value);
+            if (onUpdateVector3 != null)
+                onUpdateVector3(value);
         }
         #endregion
     }

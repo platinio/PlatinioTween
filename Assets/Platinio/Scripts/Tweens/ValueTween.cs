@@ -4,17 +4,17 @@ namespace Platinio.TweenEngine
     public class ValueTween : BaseTween
     {
         #region PRIVATE
-        private float m_from    = 0.0f;
-        private float m_to      = 0.0f;
+        private float from = 0.0f;
+        private float to = 0.0f;
         #endregion
 
         #region PUBLIC
         public ValueTween(float from, float to, float t, int id)
         {
-            m_from      = from;
-            m_to        = to;
-            m_duration  = t;
-            m_id        = id;
+            this.from = from;
+            this.to = to;
+            this.duration = t;
+            this.id = id;
         }
 
         /// <summary>
@@ -22,38 +22,38 @@ namespace Platinio.TweenEngine
         /// </summary>
         public override void Update(float deltaTime)
         {
-            
+
             //wait a delay
-            if (m_delay > 0.0f)
+            if (delay > 0.0f)
             {
-                m_delay -= deltaTime;
+                delay -= deltaTime;
                 return;
             }
 
-            base.Update(deltaTime);
+            base.Update( deltaTime );
 
             //start counting time
-            m_currentTime += deltaTime;
+            currentTime += deltaTime;
 
             //if time ends
-            if (m_currentTime >= m_duration)
+            if (currentTime >= duration)
             {
-                
 
-                if (m_onUpdateFloat != null)
-                    m_onUpdateFloat(m_to);
 
-                m_onComplete();
+                if (onUpdateFloat != null)
+                    onUpdateFloat( to );
+
+                onComplete();
                 return;
             }
 
             //get new value
-            float change    = m_to - m_from;
-            float value     = Equations.ChangeFloat(m_currentTime, m_from, change, m_duration, m_ease);
+            float change = to - from;
+            float value = Equations.ChangeFloat( currentTime, from, change, duration, ease );
 
             //call update if we have it
-            if (m_onUpdateFloat != null)
-                m_onUpdateFloat(value);
+            if (onUpdateFloat != null)
+                onUpdateFloat( value );
         }
         #endregion
     }

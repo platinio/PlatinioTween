@@ -5,52 +5,52 @@ namespace Platinio
 {
     public class Popup : MonoBehaviour
     {
-        [SerializeField] private Vector2 m_startPosition = Vector2.zero;
-        [SerializeField] private Vector2 m_desirePosition = Vector2.zero;
-        [SerializeField] private RectTransform m_canvas = null;
-        [SerializeField] private float m_height = 0.5f;
-        [SerializeField] private float m_time = 0.5f;
-        [SerializeField] private Ease m_enterEase = Ease.EaseInOutExpo;
-        [SerializeField] private Ease m_exitEase = Ease.EaseInOutExpo;
+        [SerializeField] private Vector2 startPosition = Vector2.zero;
+        [SerializeField] private Vector2 desirePosition = Vector2.zero;
+        [SerializeField] private RectTransform canvas = null;
+        [SerializeField] private float height = 0.5f;
+        [SerializeField] private float time = 0.5f;
+        [SerializeField] private Ease enterEase = Ease.EaseInOutExpo;
+        [SerializeField] private Ease exitEase = Ease.EaseInOutExpo;
 
-        private bool m_isVisible    = false;
-        private bool m_isBusy       = false;       
+        private bool isVisible    = false;
+        private bool isBusy       = false;       
         private RectTransform m_thisRect = null;
 
         private void Start()
         {
             m_thisRect = GetComponent<RectTransform>();   
             
-            m_thisRect.anchoredPosition = m_thisRect.FromAbsolutePositionToAnchoredPosition(m_startPosition , m_canvas);
+            m_thisRect.anchoredPosition = m_thisRect.FromAbsolutePositionToAnchoredPosition(startPosition , canvas);
         }
 
         private void Show()
         {
-            PlatinioTween.instance.MoveUI(m_thisRect, m_desirePosition, m_canvas, m_time).SetEase(m_enterEase).SetOnComplete(delegate
+            PlatinioTween.instance.MoveUI(m_thisRect, desirePosition, canvas, time).SetEase(enterEase).SetOnComplete(delegate
             {
-                m_isBusy = false;
-                m_isVisible = true;
+                isBusy = false;
+                isVisible = true;
             });
             
         }
 
         private void Hide()
         {
-            PlatinioTween.instance.MoveUI(m_thisRect, m_startPosition, m_canvas, m_time).SetEase(m_exitEase).SetOnComplete(delegate
+            PlatinioTween.instance.MoveUI(m_thisRect, startPosition, canvas, time).SetEase(exitEase).SetOnComplete(delegate
             {
-                m_isBusy = false;
-                m_isVisible = false;
+                isBusy = false;
+                isVisible = false;
             });
         }
 
         public void Toggle()
         {
-            if (m_isBusy)
+            if (isBusy)
                 return;
 
-            m_isBusy = true;
+            isBusy = true;
 
-            if (m_isVisible)
+            if (isVisible)
                 Hide();
             else
                 Show();

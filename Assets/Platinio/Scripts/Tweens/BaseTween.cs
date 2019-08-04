@@ -16,69 +16,69 @@ namespace Platinio.TweenEngine
     /// <summary>
     /// Base tween class
     /// </summary>
-    public abstract class BaseTween 
+    public abstract class BaseTween
     {
         #region PROTECTED
-        protected int               m_id                = 0;
-        protected float             m_delay             = 0.0f;
-        protected float             m_startTime         = 0.0f;
-        protected float             m_duration          = 0.0f;
-        protected float             m_currentTime       = 0.0f;
-        protected Ease              m_ease              = Ease.Linear;
-        protected UpdateMode        m_updateMode        = UpdateMode.Update;
-        protected GameObject        m_owner             = null;        
-        private float               m_timeSinceStart    = 0.0f;        
+        protected int id = 0;
+        protected float delay = 0.0f;
+        protected float startTime = 0.0f;
+        protected float duration = 0.0f;
+        protected float currentTime = 0.0f;
+        protected Ease ease = Ease.Linear;
+        protected UpdateMode updateMode = UpdateMode.Update;
+        protected GameObject owner = null;
+        private float timeSinceStart = 0.0f;
         #endregion
 
-        public int id { get { return m_id; } }
+        public int ID { get { return id; } }
 
         #region EVENTS
-        protected Action            m_onComplete        = null;
-        protected Action<Vector3>   m_onUpdateVector3   = null;
-        protected Action<float>     m_onUpdateFloat     = null;
-        protected Action<Transform> m_onUpdateTransform = null;
-        protected Action<Color>     m_onUpdateColor     = null;
-        protected Action<Vector2>   m_onUpdateVector2   = null;
-        protected List<TimeEvent>   m_events            = new List<TimeEvent>();
+        protected Action onComplete = null;
+        protected Action<Vector3> onUpdateVector3 = null;
+        protected Action<float> onUpdateFloat = null;
+        protected Action<Transform> onUpdateTransform = null;
+        protected Action<Color> onUpdateColor = null;
+        protected Action<Vector2> onUpdateVector2 = null;
+        protected List<TimeEvent> events = new List<TimeEvent>();
         #endregion
 
-        public GameObject Owner { get { return m_owner; } }
-        public UpdateMode UpdateMode { get { return m_updateMode; } }
+        public GameObject Owner { get { return owner; } }
+        public UpdateMode UpdateMode { get { return updateMode; } }
 
-        
+
         /// <summary>
         /// Called to update this tween
         /// </summary>
         public virtual void Update(float deltaTime)
         {
-            m_timeSinceStart += deltaTime;
+            timeSinceStart += deltaTime;
 
-            if (m_events.Count > 0 && m_timeSinceStart >= m_events[0].Time)
+            if (events.Count > 0 && timeSinceStart >= events[0].Time)
             {
-                m_events[0].Action();
-                m_events.RemoveAt(0);
+                events[0].Action();
+                events.RemoveAt( 0 );
             }
         }
-                
+
         /// <summary>
         /// Set ease type
         /// </summary>
         /// <param name="ease"></param>
         public virtual BaseTween SetEase(Ease ease)
         {
-            m_ease = ease;
+            this.ease = ease;
             return this;
         }
 
-        public BaseTween SetEvent(Action action , float t)
+        public BaseTween SetEvent(Action action, float t)
         {
-            m_events.Add(new TimeEvent(action , t));
+            events.Add( new TimeEvent( action, t ) );
 
             //sort this list
-            if(m_events.Count > 1)
-                m_events = m_events.OrderBy( o => o.Time).ToList();
+            if (events.Count > 1)
+                events = events.OrderBy( o => o.Time ).ToList();
 
-           
+
             return this;
         }
 
@@ -89,7 +89,7 @@ namespace Platinio.TweenEngine
         /// <returns></returns>
         public virtual BaseTween SetOnComplete(Action action)
         {
-            m_onComplete += action;
+            onComplete += action;
             return this;
         }
 
@@ -100,20 +100,20 @@ namespace Platinio.TweenEngine
         /// <returns></returns>
         public virtual BaseTween SetDelay(float t)
         {
-            m_delay = t;
+            delay = t;
 
             return this;
         }
 
         public virtual BaseTween SetOnUpdate(Action<Vector2> action)
         {
-            m_onUpdateVector2 += action;
+            onUpdateVector2 += action;
             return this;
         }
 
         public virtual BaseTween SetOnUpdate(Action<Color> action)
         {
-            m_onUpdateColor += action;
+            onUpdateColor += action;
             return this;
         }
 
@@ -124,7 +124,7 @@ namespace Platinio.TweenEngine
         /// <returns></returns>
         public virtual BaseTween SetOnUpdate(Action<Vector3> action)
         {
-            m_onUpdateVector3 += action;
+            onUpdateVector3 += action;
             return this;
         }
 
@@ -135,7 +135,7 @@ namespace Platinio.TweenEngine
         /// <returns></returns>
         public virtual BaseTween SetOnUpdate(Action<float> action)
         {
-            m_onUpdateFloat += action;
+            onUpdateFloat += action;
             return this;
         }
 
@@ -146,20 +146,20 @@ namespace Platinio.TweenEngine
         /// <returns></returns>
         public virtual BaseTween SetOnUpdate(Action<Transform> action)
         {
-            m_onUpdateTransform += action;
+            onUpdateTransform += action;
             return this;
         }
 
         public virtual BaseTween SetOwner(GameObject owner)
         {
-            m_owner = owner;
-            PlatinioTween.instance.ProcessConnection(this);
+            this.owner = owner;
+            PlatinioTween.instance.ProcessConnection( this );
             return this;
         }
 
         public virtual BaseTween SetUpdateMode(UpdateMode updateMode)
         {
-            m_updateMode = updateMode;
+            this.updateMode = updateMode;
             return this;
         }
 
@@ -170,7 +170,7 @@ namespace Platinio.TweenEngine
         public Action Action;
         public float Time;
 
-        public TimeEvent(Action action , float t)
+        public TimeEvent(Action action, float t)
         {
             Action = action;
             Time = t;

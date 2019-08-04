@@ -7,50 +7,50 @@ namespace Platinio
 {
     public class Animal : MonoBehaviour , IPointerEnterHandler , IPointerExitHandler , IPointerClickHandler
     {
-        [SerializeField] private Vector3 m_scale = Vector3.zero;
-        [SerializeField] private float m_speed = 50.0f;
-        [SerializeField] private float m_scapeTime = 0.01f;
-        [SerializeField] private float m_rotAmount = 360.0f;
-        [SerializeField] private float m_dieTime = 0.5f;
-        [SerializeField] private Ease m_ease = Ease.Linear;
+        [SerializeField] private Vector3 scale = Vector3.zero;
+        [SerializeField] private float speed = 50.0f;
+        [SerializeField] private float scapeTime = 0.01f;
+        [SerializeField] private float rotAmount = 360.0f;
+        [SerializeField] private float dieTime = 0.5f;
+        [SerializeField] private Ease ease = Ease.Linear;
 
-        private RectTransform m_canvas = null;
-        private RectTransform m_thisRect = null;
-        private AnimalCatchManager m_manager = null;
-        private bool m_running = false;
-        private bool m_mouseHover = false;
-        private bool m_canRun = true;
-        private int m_tweenId = -1;
-        private bool m_dead = false;
+        private RectTransform canvas = null;
+        private RectTransform thisRect = null;
+        private AnimalCatchManager manager = null;
+        private bool running = false;
+        private bool mouseHover = false;
+        private bool canRun = true;
+        private int tweenId = -1;
+        private bool dead = false;
 
         public void Construct(AnimalCatchManager manager , Sprite sprite)
         {
             GetComponent<Image>().sprite = sprite;
             GetComponent<Image>().SetNativeSize();
 
-            m_manager = manager;
-            m_thisRect = GetComponent<RectTransform>();
-            m_canvas = m_manager.Canvas;
+            this.manager = manager;
+            thisRect = GetComponent<RectTransform>();
+            canvas = manager.Canvas;
             
-            transform.localScale = m_scale;
+            transform.localScale = scale;
 
-            m_thisRect.anchoredPosition = GetRandomPoint();
+            thisRect.anchoredPosition = GetRandomPoint();
         }
 
         private void Update()
         {
-            if(m_mouseHover)
+            if(mouseHover)
                 Run();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            m_mouseHover = true;
+            mouseHover = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            m_mouseHover = false;
+            mouseHover = false;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -60,38 +60,38 @@ namespace Platinio
 
         public void Run()
         {   
-            if(m_running || !m_canRun)
+            if(running || !canRun)
                 return;
 
-            m_running = true;
+            running = true;
 
-            m_tweenId = PlatinioTween.instance.MoveUIAtSpeed( m_thisRect , new Vector2(Random.Range(0.01f, 0.98f), Random.Range(0.01f, 0.98f)) , m_canvas , m_speed).SetDelay(m_scapeTime).SetEase( m_ease ).SetOnComplete(delegate { m_running = false; }).id;
+            tweenId = PlatinioTween.instance.MoveUIAtSpeed( thisRect , new Vector2(Random.Range(0.01f, 0.98f), Random.Range(0.01f, 0.98f)) , canvas , speed).SetDelay(scapeTime).SetEase( ease ).SetOnComplete(delegate { running = false; }).ID;
         }
 
         private void Die()
         {
-            if(m_dead)
+            if(dead)
                 return;
 
-            m_dead = true;
-            m_canRun = false;
+            dead = true;
+            canRun = false;
             CancelTween();
 
-            PlatinioTween.instance.RotateTween(transform, Vector3.forward, transform.rotation.eulerAngles.z + m_rotAmount, m_dieTime).SetEase(m_ease).SetOnComplete(delegate { Destroy(gameObject); });
-            PlatinioTween.instance.ScaleTween(transform, Vector3.zero , m_dieTime).SetEase(m_ease);
+            PlatinioTween.instance.RotateTween(transform, Vector3.forward, transform.rotation.eulerAngles.z + rotAmount, dieTime).SetEase(ease).SetOnComplete(delegate { Destroy(gameObject); });
+            PlatinioTween.instance.ScaleTween(transform, Vector3.zero , dieTime).SetEase(ease);
             PlatinioTween.instance.ColorTween(GetComponent<Image>() , Color.red , 0.3f);
 
         }
 
         private Vector2 GetRandomPoint()
         {
-            return m_thisRect.FromAbsolutePositionToAnchoredPosition(new Vector2( Random.Range(0.01f , 0.98f) , Random.Range(0.01f, 0.98f)) , m_canvas );
+            return thisRect.FromAbsolutePositionToAnchoredPosition(new Vector2( Random.Range(0.01f , 0.98f) , Random.Range(0.01f, 0.98f)) , canvas );
         }
 
         private void CancelTween()
         {
-            if (m_tweenId != -1)
-                PlatinioTween.instance.CancelTween(m_tweenId);
+            if (tweenId != -1)
+                PlatinioTween.instance.CancelTween(tweenId);
         }
 
 
