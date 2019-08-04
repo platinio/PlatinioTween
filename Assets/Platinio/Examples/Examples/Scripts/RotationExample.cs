@@ -5,9 +5,21 @@ namespace Demo
 {
     public class RotationExample : MonoBehaviour
     {
+        private float currentAngle = 0.0f;
+
         private void Awake()
         {
-            PlatinioTween.instance.RotateTween(transform , Vector3.forward , 90.0f , 3.0f).SetEase(Ease.EaseOutElastic).SetDelay(2.0f);
+            Rotate();
+        }
+
+        private void Rotate()
+        {
+            currentAngle += 90.0f;
+
+            if (currentAngle > 360.0f)
+                currentAngle = 0.0f;
+
+            PlatinioTween.instance.RotateTween( transform, Vector3.forward, currentAngle , 2.0f ).SetEase( Ease.EaseOutElastic ).SetDelay( 1.0f ).SetOnComplete(Rotate);
         }
     }
 
