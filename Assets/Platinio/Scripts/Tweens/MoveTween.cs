@@ -44,9 +44,7 @@ namespace Platinio.TweenEngine
             {
                 obj.position = to.position;
 
-
-                if (onUpdateTransform != null)
-                    onUpdateTransform( obj );
+                CallOnUpdate();
 
                 onComplete();
                 return;
@@ -56,12 +54,19 @@ namespace Platinio.TweenEngine
             Vector3 change = to.position - initialPos;
             obj.position = Equations.ChangeVector( currentTime, initialPos, change, duration, ease );
 
-            //call update if we have it
-            if (onUpdateTransform != null)
-                onUpdateTransform( obj );
+            CallOnUpdate();
 
         }
-        #endregion        
+        #endregion
+
+        private void CallOnUpdate()
+        {           
+            if (onUpdateVector3 != null)
+                onUpdateVector3( obj.position );
+
+            if (onUpdateVector2 != null)
+                onUpdateVector2( obj.position );
+        }
     }
 
 }

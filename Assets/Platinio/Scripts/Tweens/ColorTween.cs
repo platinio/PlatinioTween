@@ -17,6 +17,7 @@ namespace Platinio.TweenEngine
 
         public override void Update(float deltaTime)
         {
+           
             //wait a delay
             if (delay > 0.0f)
             {
@@ -32,7 +33,6 @@ namespace Platinio.TweenEngine
             //if time ends
             if (currentTime >= duration)
             {
-
                 if (onUpdateColor != null)
                     onUpdateColor( this.to );
 

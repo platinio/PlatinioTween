@@ -131,7 +131,7 @@ namespace Platinio.TweenEngine
         public BaseTween ScaleTween(Transform t, Vector3 to, float time)
         {
             Vector3Tween tween = new Vector3Tween( t.localScale, to, time, GenerateId() );
-            tween.SetOnUpdate( delegate (Vector3 v)
+            tween.SetOnUpdateVector3( delegate (Vector3 v)
              {
                  if (t == null)
                  {
@@ -177,7 +177,7 @@ namespace Platinio.TweenEngine
         }
         public BaseTween ScaleX(Transform obj, float value, float t)
         {
-            return ValueTween( obj.localScale.x, value, t ).SetOnUpdate( (float v) =>
+            return ValueTween( obj.localScale.x, value, t ).SetOnUpdateFloat( (float v) =>
                {
                    if (obj == null)
                    {
@@ -221,7 +221,7 @@ namespace Platinio.TweenEngine
 
         public BaseTween ScaleY(Transform obj, float value, float t)
         {
-            return ValueTween( obj.localScale.y, value, t ).SetOnUpdate( (float v) =>
+            return ValueTween( obj.localScale.y, value, t ).SetOnUpdateFloat( (float v) =>
                {
                    if (obj == null)
                        return;
@@ -264,7 +264,7 @@ namespace Platinio.TweenEngine
 
         public BaseTween ScaleZ(Transform obj, float value, float t)
         {
-            return ValueTween( obj.localScale.z, value, t ).SetOnUpdate( (float v) =>
+            return ValueTween( obj.localScale.z, value, t ).SetOnUpdateFloat( (float v) =>
                {
                    if (obj == null)
                        return;
@@ -310,7 +310,7 @@ namespace Platinio.TweenEngine
         public BaseTween RotateTween(Transform t, Vector3 axis, float to, float time)
         {
             Vector3Tween tween = new Vector3Tween( t.rotation.eulerAngles, axis * to, time, GenerateId() );
-            tween.SetOnUpdate( delegate (Vector3 v)
+            tween.SetOnUpdateVector3( delegate (Vector3 v)
              {
                  if (t == null)
                  {
@@ -362,7 +362,7 @@ namespace Platinio.TweenEngine
         public BaseTween Fade(CanvasGroup cg, float to, float t)
         {
             ValueTween tween = new ValueTween( cg.alpha, to, t, GenerateId() );
-            tween.SetOnUpdate( delegate (float v)
+            tween.SetOnUpdateFloat( delegate (float v)
              {
                  if (cg == null)
                  {
@@ -384,7 +384,7 @@ namespace Platinio.TweenEngine
         public BaseTween Fade(Image image, float to, float t)
         {
             ValueTween tween = new ValueTween( image.color.a, to, t, GenerateId() );
-            tween.SetOnUpdate( delegate (float v)
+            tween.SetOnUpdateFloat( delegate (float v)
              {
                  if (image == null)
                  {
@@ -430,7 +430,7 @@ namespace Platinio.TweenEngine
         public BaseTween Fade(SpriteRenderer sprite, float to, float t)
         {
             ValueTween tween = new ValueTween( sprite.color.a, to, t, GenerateId() );
-            tween.SetOnUpdate( delegate (float v)
+            tween.SetOnUpdateFloat( delegate (float v)
              {
                  if (sprite == null)
                  {
@@ -490,7 +490,7 @@ namespace Platinio.TweenEngine
         public BaseTween ColorTween(SpriteRenderer sprite, Color to, float t)
         {
             ColorTween tween = new ColorTween( sprite.color, to, t, GenerateId() );
-            tween.SetOnUpdate( delegate (Color c)
+            tween.SetOnUpdateColor( delegate (Color c)
              {
                  if (sprite == null)
                  {
@@ -512,7 +512,7 @@ namespace Platinio.TweenEngine
         public BaseTween ColorTween(Image image, Color to, float t)
         {
             ColorTween tween = new ColorTween( image.color, to, t, GenerateId() );
-            tween.SetOnUpdate( delegate (Color c)
+            tween.SetOnUpdateColor( delegate (Color c)
              {
                  if (image == null)
                  {
@@ -602,7 +602,7 @@ namespace Platinio.TweenEngine
         public BaseTween Move(Transform obj, Vector3 to, float t)
         {
             Vector3Tween tween = new Vector3Tween( obj.position, to, t, GenerateId() );
-            tween.SetOnUpdate( (Vector3 pos) =>
+            tween.SetOnUpdateVector3( (Vector3 pos) =>
              {
                  if (obj == null)
                  {
@@ -669,7 +669,7 @@ namespace Platinio.TweenEngine
         public BaseTween Move(RectTransform rect, Vector2 pos, float t)
         {
 
-            return VectorTween( new Vector3( rect.anchoredPosition.x, rect.anchoredPosition.y, 0.0f ), new Vector3( pos.x, pos.y, 0.0f ), t ).SetOnUpdate( (Vector3 value) =>
+            return VectorTween( new Vector3( rect.anchoredPosition.x, rect.anchoredPosition.y, 0.0f ), new Vector3( pos.x, pos.y, 0.0f ), t ).SetOnUpdateVector3( (Vector3 value) =>
               {
                   if (rect == null)
                       return;

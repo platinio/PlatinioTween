@@ -44,6 +44,9 @@ namespace Platinio.TweenEngine
                 if(onUpdateVector3 != null)
                     onUpdateVector3(to);
 
+                if (onUpdateVector2 != null)
+                    onUpdateVector2( to );
+
                 onComplete();
                 return;
             }
@@ -55,6 +58,9 @@ namespace Platinio.TweenEngine
             //call update if we have it
             if (onUpdateVector3 != null)
                 onUpdateVector3(value);
+
+            if (onUpdateVector2 != null)
+                onUpdateVector2(value);
         }
         #endregion
     }

@@ -34,9 +34,9 @@ namespace Platinio.TweenEngine
 
         #region EVENTS
         protected Action onComplete = null;
+        protected Action onUpdate = null;
         protected Action<Vector3> onUpdateVector3 = null;
-        protected Action<float> onUpdateFloat = null;
-        protected Action<Transform> onUpdateTransform = null;
+        protected Action<float> onUpdateFloat = null;        
         protected Action<Color> onUpdateColor = null;
         protected Action<Vector2> onUpdateVector2 = null;
         protected List<TimeEvent> events = new List<TimeEvent>();
@@ -58,6 +58,9 @@ namespace Platinio.TweenEngine
                 events[0].Action();
                 events.RemoveAt( 0 );
             }
+
+            if(onUpdate != null)
+                onUpdate();
         }
 
         /// <summary>
@@ -105,50 +108,45 @@ namespace Platinio.TweenEngine
             return this;
         }
 
-        public virtual BaseTween SetOnUpdate(Action<Vector2> action)
+        public virtual BaseTween SetOnUpdate(Action action)
+        {
+            onUpdate += action;
+            return this;
+        }
+
+        public virtual BaseTween SetOnUpdateVector2(Action<Vector2> action)
         {
             onUpdateVector2 += action;
             return this;
         }
 
-        public virtual BaseTween SetOnUpdate(Action<Color> action)
-        {
-            onUpdateColor += action;
-            return this;
-        }
-
         /// <summary>
         /// Set Callback for OnUpdate
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public virtual BaseTween SetOnUpdate(Action<Vector3> action)
+        public virtual BaseTween SetOnUpdateVector3(Action<Vector3> action)
         {
             onUpdateVector3 += action;
             return this;
         }
 
-        /// <summary>
-        /// Set Callback for OnUpdate
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public virtual BaseTween SetOnUpdate(Action<float> action)
+        public virtual BaseTween SetOnUpdateColor(Action<Color> action)
         {
-            onUpdateFloat += action;
+            onUpdateColor += action;
             return this;
-        }
+        }       
 
         /// <summary>
         /// Set Callback for OnUpdate
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public virtual BaseTween SetOnUpdate(Action<Transform> action)
+        public virtual BaseTween SetOnUpdateFloat(Action<float> action)
         {
-            onUpdateTransform += action;
+            onUpdateFloat += action;
             return this;
-        }
+        }       
 
         public virtual BaseTween SetOwner(GameObject owner)
         {

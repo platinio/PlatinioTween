@@ -39,7 +39,6 @@ namespace Platinio.TweenEngine
             if (currentTime >= duration)
             {
 
-
                 if (onUpdateFloat != null)
                     onUpdateFloat( to );
 
