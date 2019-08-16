@@ -15,18 +15,18 @@ namespace Platinio
 
         private bool isVisible    = false;
         private bool isBusy       = false;       
-        private RectTransform m_thisRect = null;
+        private RectTransform thisRect = null;
 
         private void Start()
         {
-            m_thisRect = GetComponent<RectTransform>();   
+            thisRect = GetComponent<RectTransform>();   
             
-            m_thisRect.anchoredPosition = m_thisRect.FromAbsolutePositionToAnchoredPosition(startPosition , canvas);
+            thisRect.anchoredPosition = thisRect.FromAbsolutePositionToAnchoredPosition(startPosition , canvas);
         }
 
         private void Show()
         {
-            PlatinioTween.instance.MoveUI(m_thisRect, desirePosition, canvas, time).SetEase(enterEase).SetOnComplete(delegate
+            thisRect.Move(desirePosition, canvas, time).SetEase(enterEase).SetOnComplete(delegate
             {
                 isBusy = false;
                 isVisible = true;
@@ -36,7 +36,7 @@ namespace Platinio
 
         private void Hide()
         {
-            PlatinioTween.instance.MoveUI(m_thisRect, startPosition, canvas, time).SetEase(exitEase).SetOnComplete(delegate
+            thisRect.Move(startPosition, canvas, time).SetEase(exitEase).SetOnComplete(delegate
             {
                 isBusy = false;
                 isVisible = false;

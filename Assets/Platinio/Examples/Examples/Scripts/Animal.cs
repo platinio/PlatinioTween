@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Platinio.TweenEngine;
 using Platinio.UI;
 
 namespace Platinio
@@ -19,8 +18,7 @@ namespace Platinio
         private RectTransform thisRect = null;        
         private bool running = false;
         private bool mouseHover = false;
-        private bool canRun = true;
-        private int tweenId = -1;
+        private bool canRun = true;       
         private bool dead = false;
 
         public void Construct(AnimalCatchManager manager , Sprite sprite)
@@ -65,7 +63,7 @@ namespace Platinio
 
             running = true;
 
-            tweenId = PlatinioTween.instance.MoveUIAtSpeed( thisRect , new Vector2(Random.Range(0.01f, 0.98f), Random.Range(0.01f, 0.98f)) , canvas , speed).SetDelay(scapeTime).SetEase( ease ).SetOnComplete(delegate { running = false; }).ID;
+            thisRect.MoveAtSpeed( new Vector2(Random.Range(0.01f, 0.98f), Random.Range(0.01f, 0.98f)) , canvas , speed).SetDelay(scapeTime).SetEase( ease ).SetOnComplete(delegate { running = false; }).SetOwner(gameObject);
         }
 
         private void Die()
@@ -77,9 +75,9 @@ namespace Platinio
             canRun = false;
             CancelTween();
 
-            PlatinioTween.instance.RotateTween(transform, Vector3.forward, transform.rotation.eulerAngles.z + rotAmount, dieTime).SetEase(ease).SetOnComplete(delegate { Destroy(gameObject); });
-            PlatinioTween.instance.ScaleTween(transform, Vector3.zero , dieTime).SetEase(ease);
-            PlatinioTween.instance.ColorTween(GetComponent<Image>() , Color.red , 0.3f);
+            transform.RotateTween(Vector3.forward, transform.rotation.eulerAngles.z + rotAmount, dieTime).SetEase(ease).SetOnComplete(delegate { Destroy(gameObject); });
+            transform.ScaleTween( Vector3.zero , dieTime).SetEase(ease);
+            GetComponent<Image>().ColorTween(Color.red , 0.3f);
 
         }
 
@@ -90,8 +88,7 @@ namespace Platinio
 
         private void CancelTween()
         {
-            if (tweenId != -1)
-                PlatinioTween.instance.CancelTween(tweenId);
+            gameObject.CancelAllTweens();
         }
 
 

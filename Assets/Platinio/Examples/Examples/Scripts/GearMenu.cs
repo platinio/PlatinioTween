@@ -26,18 +26,19 @@ namespace Platinio
         private void Show()
         {
            
-            PlatinioTween.instance.MoveUI(hideMenu, new Vector2(startPosition.x, startPosition.y + height ), canvas, time).SetEase(ease);
-            PlatinioTween.instance.RotateTween(gearIcon , Vector3.forward , gearIcon.rotation.eulerAngles.z + gearRotation  , time).SetEase(ease).SetOnComplete(delegate 
+            hideMenu.Move(new Vector2(startPosition.x, startPosition.y + height ), canvas, time).SetEase(ease);
+            gearIcon.RotateTween( Vector3.forward , gearIcon.rotation.eulerAngles.z + gearRotation  , time).SetEase(ease).SetOnComplete(delegate 
             {
                 isBusy = false;
                 isVisible = true;
             });
+            
         }
 
         private void Hide()
         {
-            PlatinioTween.instance.MoveUI(hideMenu, startPosition, canvas, time).SetEase(ease);
-            PlatinioTween.instance.RotateTween(gearIcon, Vector3.forward, gearIcon.rotation.eulerAngles.z - gearRotation, time).SetEase(ease).SetOnComplete(delegate
+            hideMenu.Move(startPosition, canvas, time).SetEase(ease);
+            gearIcon.RotateTween(Vector3.forward, gearIcon.rotation.eulerAngles.z - gearRotation, time).SetEase(ease).SetOnComplete(delegate
             {
                 isBusy = false;
                 isVisible = false;
@@ -56,6 +57,7 @@ namespace Platinio
             else
                 Show();
         }
+
 
        
     }

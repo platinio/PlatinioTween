@@ -19,7 +19,7 @@ namespace Demo
             if (currentAngle > 360.0f)
                 currentAngle = 0.0f;
 
-            PlatinioTween.instance.RotateTween( transform, Vector3.forward, currentAngle , 2.0f ).SetEase( Ease.EaseOutElastic ).SetDelay( 1.0f ).SetOnComplete(Rotate);
+            transform.RotateTween( Vector3.forward, currentAngle , 2.0f ).SetEase( Ease.EaseOutElastic ).SetDelay( 1.0f ).SetOnComplete(Rotate);
         }
     }
 

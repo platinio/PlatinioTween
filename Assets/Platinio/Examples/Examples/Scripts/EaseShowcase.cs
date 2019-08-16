@@ -20,7 +20,7 @@ namespace Platinio.TweenEngine
         private void Move()
         {
             transform.position = startPosition;
-            PlatinioTween.instance.Move(transform, pos, time).SetEase(ease).SetOnComplete(Move);
+            transform.Move(pos, time).SetEase(ease).SetOnComplete(Move);
         }
        
     }

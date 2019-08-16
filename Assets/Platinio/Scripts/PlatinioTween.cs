@@ -467,10 +467,10 @@ namespace Platinio.TweenEngine
             return Fade( sprite, 1.0f, t );
         }
 
-        public BaseTween FadeInAtSpeed(SpriteRenderer srpite, float speed)
+        public BaseTween FadeInAtSpeed(SpriteRenderer sprite, float speed)
         {
-            float t = Mathf.Abs( srpite.color.a - 1.0f ) / speed;
-            return Fade( srpite, 1.0f, t );
+            float t = Mathf.Abs( sprite.color.a - 1.0f ) / speed;
+            return Fade( sprite, 1.0f, t );
         }
 
         #endregion

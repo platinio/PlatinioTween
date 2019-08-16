@@ -5,7 +5,7 @@ namespace Demo
 {
     public class ScalingExample : MonoBehaviour
     {
-        [SerializeField] private GameObject m_go = null;
+        [SerializeField] private GameObject go = null;
 
         private float targetScale = 0.0f;
 
@@ -28,7 +28,7 @@ namespace Demo
             }
                 
 
-            PlatinioTween.instance.ScaleTween( m_go.transform, Vector3.one * targetScale, t ).SetEase( Ease.EaseOutElastic ).SetDelay( 0.2f ).SetOnComplete(Scale);
+            go.ScaleTween( Vector3.one * targetScale, t ).SetEase( Ease.EaseOutElastic ).SetDelay( 0.2f ).SetOnComplete(Scale);
         }
     }
 

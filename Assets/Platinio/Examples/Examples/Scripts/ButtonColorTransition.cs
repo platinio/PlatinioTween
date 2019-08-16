@@ -10,7 +10,7 @@ namespace Platinio
         [SerializeField] private Color highlightColor = Color.black;
         [SerializeField] private float time = 0.1f;
 
-        private int tweenId = -1;
+
         private Color originalColor = Color.black;
         private Image thisImage = null;
 
@@ -24,20 +24,18 @@ namespace Platinio
         {
             CancelTween();
 
-            tweenId = PlatinioTween.instance.ColorTween(thisImage, highlightColor, time).ID;
+            thisImage.ColorTween(highlightColor, time);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             CancelTween();
-
-            tweenId = PlatinioTween.instance.ColorTween(thisImage, originalColor, time).ID;
+            thisImage.ColorTween(originalColor, time);
         }
 
         private void CancelTween()
         {
-            if (tweenId != -1)
-                PlatinioTween.instance.CancelTween(tweenId);
+            gameObject.CancelAllTweens();
         }
     }
 
