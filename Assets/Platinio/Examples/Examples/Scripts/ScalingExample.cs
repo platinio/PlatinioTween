@@ -28,7 +28,7 @@ namespace Demo
             }
                 
 
-            go.ScaleTween( Vector3.one * targetScale, t ).SetEase( Ease.EaseOutElastic ).SetDelay( 0.2f ).SetOnComplete(Scale);
+            go.ScaleTween( Vector3.one * targetScale, t ).SetEase( Ease.EaseOutElastic ).SetDelay( 0.2f ).SetOnComplete(Scale);            
         }
     }
 
