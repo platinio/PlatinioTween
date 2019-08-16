@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
-using Platinio;
+using Platinio.UI;
 
 namespace Platinio.TweenEngine
 {

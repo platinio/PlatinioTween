@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Platinio
+namespace Platinio.UI
 {
     public enum PivotPreset
     {

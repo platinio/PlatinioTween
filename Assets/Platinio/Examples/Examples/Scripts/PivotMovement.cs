@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Platinio.TweenEngine;
+using Platinio.UI;
 using System.Collections;
 
 namespace Platinio

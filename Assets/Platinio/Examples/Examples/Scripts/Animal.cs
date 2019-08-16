@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Platinio.TweenEngine;
+using Platinio.UI;
 
 namespace Platinio
 {
