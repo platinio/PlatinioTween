@@ -9,7 +9,7 @@ This is a Unity3D Asset that let you create animations by code, and works very w
 
 Getting started
 ==============
-Just download and import [this](https://github.com/platinio/PlatinioTween/releases/download/1.0/PlatinioTween.1.0.unitypackage) and remember to use.
+Just download and import [this](https://github.com/platinio/PlatinioTween/releases/download/1.1/PlatinioTween.1.1.unitypackage) and remember to use.
 
 ```c#
 using Platinio.TweenEngine;
