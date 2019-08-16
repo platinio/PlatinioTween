@@ -332,7 +332,7 @@ public static class PlatinioTweenExtension
         PlatinioTween.instance.CancelTween(go);
     }
 
-    public static void CancelTween(this GameObject , int id)
+    public static void CancelTween(this GameObject go , int id)
     {
         PlatinioTween.instance.CancelTween(id);
     }
