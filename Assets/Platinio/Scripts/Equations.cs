@@ -2,7 +2,7 @@
 
 namespace Platinio.TweenEngine
 {
-    public enum Ease
+    public enum EaseOld
     {
         Linear = 0,
         EaseInQuad = 1,
@@ -792,6 +792,8 @@ namespace Platinio.TweenEngine
         {
             return methods[(int)ease](t, b, c, d);
         }
+
+        
     }
 
 }

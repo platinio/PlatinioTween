@@ -46,9 +46,8 @@ namespace Platinio.TweenEngine
                 return;
             }
 
-            //get new value
-            float change = to - from;
-            float value = Equations.ChangeFloat( currentTime, from, change, duration, ease );
+            //get new value           
+            float value = EasingFunctions.ChangeFloat(from , to , currentTime / duration , ease);
 
             //call update if we have it
             if (onUpdateFloat != null)

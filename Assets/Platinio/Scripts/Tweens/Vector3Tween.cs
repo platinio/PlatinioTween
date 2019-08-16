@@ -51,9 +51,8 @@ namespace Platinio.TweenEngine
                 return;
             }
 
-            //get new value
-            Vector3 change  = to - from;
-            Vector3 value   = Equations.ChangeVector(currentTime, from, change, duration, ease);
+            //get new value           
+            Vector3 value = EasingFunctions.ChangeVector(from , to , currentTime / duration , ease);
 
             //call update if we have it
             if (onUpdateVector3 != null)

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Platinio.TweenEngine;
+using System.Collections;
 
 namespace Platinio
 {
@@ -17,15 +18,22 @@ namespace Platinio
             thisRectTransform = GetComponent<RectTransform>();
             startPosition = thisRectTransform.anchoredPosition;
 
-            Move();
+            StartCoroutine( MoveRoutine() );
         }
 
-        private void Move()
+        
+        private IEnumerator MoveRoutine()
         {
-            thisRectTransform.anchoredPosition = startPosition;
-            PlatinioTween.instance.MoveUI( thisRectTransform, finalPos, canvas, 0.5f, anchor ).SetOnComplete(Move).SetDelay(1.0f);
+            while (true)
+            {
+                thisRectTransform.anchoredPosition = startPosition;
+                PlatinioTween.instance.MoveUI( thisRectTransform, finalPos, canvas, 0.5f, anchor );
+
+                yield return new WaitForSeconds(2.0f);
+            }            
         }
-      
+        
+
     }
 
 }

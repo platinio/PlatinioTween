@@ -51,8 +51,10 @@ namespace Platinio.TweenEngine
             }
 
             //get new value
-            Vector3 change = to.position - initialPos;
-            obj.position = Equations.ChangeVector( currentTime, initialPos, change, duration, ease );
+            //Vector3 change = to.position - initialPos;
+            //obj.position = Equations.ChangeVector( currentTime, initialPos, change, duration, ease );
+
+            obj.position = EasingFunctions.ChangeVector(initialPos , to.position , currentTime / duration , ease);
 
             CallOnUpdate();
 
