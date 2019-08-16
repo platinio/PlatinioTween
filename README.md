@@ -9,7 +9,7 @@ This is a Unity3D Asset that let you create animations by code, and works very w
 
 Getting started
 ==============
-Just download and import [this](https://github.com/platinio/PlatinioTween/releases/download/1.1/PlatinioTween.1.2.unitypackage) 
+Just download and import [this](https://github.com/platinio/PlatinioTween/releases/download/1.2.1/PlatinioTween.1.2.1.unitypackage) 
 
 and if you want to access directly the RectTransformHelper
 
