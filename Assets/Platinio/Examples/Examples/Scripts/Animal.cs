@@ -15,8 +15,7 @@ namespace Platinio
         [SerializeField] private Ease ease = Ease.Linear;
 
         private RectTransform canvas = null;
-        private RectTransform thisRect = null;
-        private AnimalCatchManager manager = null;
+        private RectTransform thisRect = null;        
         private bool running = false;
         private bool mouseHover = false;
         private bool canRun = true;
@@ -28,7 +27,7 @@ namespace Platinio
             GetComponent<Image>().sprite = sprite;
             GetComponent<Image>().SetNativeSize();
 
-            this.manager = manager;
+           
             thisRect = GetComponent<RectTransform>();
             canvas = manager.Canvas;
             

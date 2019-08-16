@@ -48,9 +48,8 @@ namespace Platinio.TweenEngine
                 return;
             }
 
-            //get new value
-            Vector2 change = to - from;
-            Vector2 value = Equations.ChangeVector(currentTime, from, change, duration, ease);
+            //get the new value
+            Vector2 value = EasingFunctions.ChangeVector(from , to , currentTime / duration , ease);
 
             //Vector2 vector2Value = new Vector2(value.x , value.y);
 
