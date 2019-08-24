@@ -28,7 +28,7 @@ transform.ScaleTween(Vector3.one * 10.0f , 2.0f);
 Canceling a tween before it ends
 ==============
 
-Sometimes you will like to cancel a tween before it ends, if that is the case the recomended way is to set a GameObject as te owner, typically the GameObject creating the tween, and later use it to cancel the tween.
+Sometimes you will like to cancel a tween before it ends, if that is the case the recommended  way is to set a GameObject as the owner, typically the GameObject creating the tween, and later use it to cancel the tween.
 
 ```c#
 IEnumerator CO_TweenRoutine()
@@ -71,7 +71,7 @@ Will result in:
 ![](easeoutbounce.gif)
 
 
-Animating UI Elements
+Animating UI 
 ==============
 
 Ok it is really usefull create tweens via code, but the real stuff is to create UI Animations, if you has been try it before then you know how hard it can be moving UI around because RectTransform positions are always relative to his anchor, so it means that.
@@ -80,7 +80,7 @@ Ok it is really usefull create tweens via code, but the real stuff is to create 
 rectTransform.anchoredPosition = new Vector2(100.0f , 100.0f);
 ```
 
-is diferent for every single element that has diferent anchors configuration, one way to made it "works" is to use the same anchor position for every single element that we want to animate, but if you has been try it you know that it creates more problems.
+is different for every single element that has different anchors configuration, one way to made it "works" is to use the same anchor position for every single element that we want to animate, but if you has been try it you know that it creates more problems.
 
 So i made a function to convert any anchoredPosition for any RectTransform to a global coordinate system, so you can move stuff around as precise as you want without touching the anchors.
 
@@ -209,7 +209,7 @@ SetEvent
 ==============
 you can set events that will be called in a specified time of the animation.
 ```c#
-//call do something just at the midle of the animation
+//call do something just at the middle of the animation
 transform.Move(Vector3.zero, 5.0f).SetEvent(DoSomething() , 5.0f / 2.0f);
 ```
 
