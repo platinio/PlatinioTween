@@ -327,9 +327,9 @@ public static class PlatinioTweenExtension
         return PlatinioTween.instance.MoveUIAtSpeed(rect , absolutePosition , canvas , speed , pivotPreset);
     }
 
-    public static BaseTween TranslateUI(this RectTransform rect, Vector2 translation, RectTransform canvas, float speed, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
+    public static BaseTween TranslateUI(this RectTransform rect, Vector2 translation, RectTransform canvas, float t, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
     {
-        return PlatinioTween.instance.TranslateUI(rect , translation  , canvas , speed , pivotPreset);
+        return PlatinioTween.instance.TranslateUI(rect , translation  , canvas , t , pivotPreset);
     }
 
     public static BaseTween TranslateUIAtSpeed(this RectTransform rect, Vector2 translation, RectTransform canvas, float speed, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
