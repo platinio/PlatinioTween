@@ -681,7 +681,7 @@ namespace Platinio.TweenEngine
         public BaseTween MoveAtSpeed(RectTransform rect, Vector2 pos, float speed)
         {
             float t = Vector2.Distance( new Vector2( rect.anchoredPosition.x, rect.anchoredPosition.y ), new Vector2( rect.anchoredPosition.x, rect.anchoredPosition.y ) ) / speed;
-            return Move( rect, pos, t );
+            return Move( rect, pos, t);
         }
 
         //use this to position UI in absolute coordenates
