@@ -36,3 +36,4 @@ Thumbs.db
 # == project == #
 Assets/scenes/sandboxes/*.unity*
 Assets/IgnoreByGit/
+.vs/
