@@ -10,7 +10,7 @@ namespace Platinio
 
         public override BaseTween Play()
         {
-            return cg.Fade(targetAlpha , time);
+            return cg.Fade(targetAlpha , time).SetEase(ease);
         }
     }
 }
