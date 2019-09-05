@@ -26,7 +26,7 @@ namespace Platinio
         private void Show()
         {
            
-            hideMenu.Move(new Vector2(startPosition.x, startPosition.y + height ), canvas, time).SetEase(ease);
+            hideMenu.MoveUI(new Vector2(startPosition.x, startPosition.y + height ), canvas, time).SetEase(ease);
             gearIcon.RotateTween( Vector3.forward , gearIcon.rotation.eulerAngles.z + gearRotation  , time).SetEase(ease).SetOnComplete(delegate 
             {
                 isBusy = false;
@@ -37,7 +37,7 @@ namespace Platinio
 
         private void Hide()
         {
-            hideMenu.Move(startPosition, canvas, time).SetEase(ease);
+            hideMenu.MoveUI(startPosition, canvas, time).SetEase(ease);
             gearIcon.RotateTween(Vector3.forward, gearIcon.rotation.eulerAngles.z - gearRotation, time).SetEase(ease).SetOnComplete(delegate
             {
                 isBusy = false;

@@ -316,16 +316,28 @@ public static class PlatinioTweenExtension
         return PlatinioTween.instance.MoveAtSpeed(rect , pos , speed);
     }
 
-    public static BaseTween Move(this RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float t, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
+    public static BaseTween MoveUI(this RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float t, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
     {
         return PlatinioTween.instance.MoveUI(rect , absolutePosition , canvas, t , pivotPreset);
     }
 
 
-    public static BaseTween MoveAtSpeed(this RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float speed)
+    public static BaseTween MoveUIAtSpeed(this RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float speed , PivotPreset pivotPreset = PivotPreset.MiddleCenter)
     {
-        return PlatinioTween.instance.MoveUIAtSpeed(rect , absolutePosition , canvas , speed);
+        return PlatinioTween.instance.MoveUIAtSpeed(rect , absolutePosition , canvas , speed , pivotPreset);
     }
+
+    public static BaseTween TranslateUI(this RectTransform rect, Vector2 translation, RectTransform canvas, float speed, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
+    {
+        return PlatinioTween.instance.TranslateUI(rect , translation  , canvas , speed , pivotPreset);
+    }
+
+    public static BaseTween TranslateUIAtSpeed(this RectTransform rect, Vector2 translation, RectTransform canvas, float speed, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
+    {
+        return PlatinioTween.instance.TranslateUIAtSpeed( rect, translation, canvas, speed, pivotPreset );
+    }
+
+
 
     public static void CancelAllTweens(this GameObject go)
     {

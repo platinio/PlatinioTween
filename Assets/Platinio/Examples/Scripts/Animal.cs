@@ -63,7 +63,7 @@ namespace Platinio
 
             running = true;
 
-            thisRect.MoveAtSpeed( new Vector2(Random.Range(0.01f, 0.98f), Random.Range(0.01f, 0.98f)) , canvas , speed).SetDelay(scapeTime).SetEase( ease ).SetOnComplete(delegate { running = false; }).SetOwner(gameObject);
+            thisRect.MoveUIAtSpeed( new Vector2(Random.Range(0.01f, 0.98f), Random.Range(0.01f, 0.98f)) , canvas , speed).SetDelay(scapeTime).SetEase( ease ).SetOnComplete(delegate { running = false; }).SetOwner(gameObject);
         }
 
         private void Die()

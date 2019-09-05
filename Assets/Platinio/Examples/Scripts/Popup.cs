@@ -26,7 +26,7 @@ namespace Platinio
 
         private void Show()
         {
-            thisRect.Move(desirePosition, canvas, time).SetEase(enterEase).SetOnComplete(delegate
+            thisRect.MoveUI( desirePosition, canvas, time).SetEase(enterEase).SetOnComplete(delegate
             {
                 isBusy = false;
                 isVisible = true;
@@ -36,7 +36,7 @@ namespace Platinio
 
         private void Hide()
         {
-            thisRect.Move(startPosition, canvas, time).SetEase(exitEase).SetOnComplete(delegate
+            thisRect.MoveUI( startPosition, canvas, time).SetEase(exitEase).SetOnComplete(delegate
             {
                 isBusy = false;
                 isVisible = false;

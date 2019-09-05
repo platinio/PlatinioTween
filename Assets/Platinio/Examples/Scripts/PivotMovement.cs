@@ -28,7 +28,7 @@ namespace Platinio
             while (true)
             {
                 thisRectTransform.anchoredPosition = startPosition;
-                thisRectTransform.Move(finalPos, canvas, 0.5f, anchor );
+                thisRectTransform.MoveUI( finalPos, canvas, 0.5f, anchor );
 
                 yield return new WaitForSeconds(2.0f);
             }            

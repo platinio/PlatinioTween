@@ -710,16 +710,34 @@ namespace Platinio.TweenEngine
             return Move( rect, pos, t );
         }
 
-
-        public BaseTween MoveUIAtSpeed(RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float speed)
+        public BaseTween MoveUIAtSpeed(RectTransform rect, Vector2 absolutePosition, RectTransform canvas, float speed , PivotPreset pivotPreset = PivotPreset.MiddleCenter)
         {
 
-            Vector2 pos = rect.FromAbsolutePositionToAnchoredPosition( absolutePosition, canvas );
+            Vector2 pos = rect.FromAbsolutePositionToAnchoredPosition( absolutePosition, canvas , pivotPreset );
 
             float time = Vector3.Distance( rect.anchoredPosition, pos ) / speed;
 
-            return MoveUI( rect, absolutePosition, canvas, time );
+            return MoveUI( rect, absolutePosition, canvas, time , pivotPreset );
         }
+
+        public BaseTween TranslateUI(RectTransform rect, Vector2 translation, RectTransform canvas, float t, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
+        {
+            Vector2 pos = rect.FromAnchoredPositionToAbsolutePosition( canvas , pivotPreset );
+            Vector2 finalPos = pos + translation;
+
+            return MoveUI(rect , finalPos , canvas , t , pivotPreset);
+        }
+
+        public BaseTween TranslateUIAtSpeed(RectTransform rect, Vector2 translation, RectTransform canvas, float speed, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
+        {
+            Vector2 pos = rect.FromAnchoredPositionToAbsolutePosition( canvas, pivotPreset );
+            Vector2 finalPos = pos + translation;
+
+            return MoveUIAtSpeed( rect, finalPos, canvas, speed, pivotPreset );
+        }
+
+
+
 
         #endregion
 
