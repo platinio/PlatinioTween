@@ -306,12 +306,6 @@ namespace Platinio.TweenEngine
             return ScaleZ(obj, value, time);
         }
 
-        internal BaseTween FollowRelative(Transform obj, Transform target, float t)
-        {
-            BaseTween tween = TweenPool.GetFollowRelative(obj, target, t);
-            return ProcessTween(tween);
-        }
-
         public BaseTween ScaleZAtSpeed(GameObject obj, float value, float speed)
         {
             float time = Math.Abs(obj.transform.localScale.z - value) / speed;

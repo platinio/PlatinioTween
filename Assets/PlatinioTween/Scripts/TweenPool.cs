@@ -130,21 +130,6 @@ namespace Platinio.TweenEngine
             return tween;
         }
 
-        internal static FollowRelative GetFollowRelative(Transform obj, Transform target, float t)
-        {
-            FollowRelative tween;
-            if (TryGetTween(followRelativeTweens, out tween))
-            {
-                tween.Init(obj, target, t);
-            }
-            else
-            {
-                tween = new FollowRelative(obj, target, t, GenerateId());
-            }
-            _activeTweens.Add(tween);
-            return tween;
-        }
-
         internal static Vector2Tween GetVector2Tween(Vector2 from, Vector2 to, float t)
         {
             Vector2Tween tween;
