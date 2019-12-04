@@ -1,22 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Platinio.TweenEngine
 {
-    
+
     public class Vector3Tween : BaseTween
     {
         #region PRIVATE
-        private Vector3 from  = Vector3.zero;
-        private Vector3 to    = Vector3.zero;
+        private Vector3 from = Vector3.zero;
+        private Vector3 to = Vector3.zero;
         #endregion
 
         #region PUBLIC
-        public Vector3Tween(Vector3 from, Vector3 to, float t , int id)
+        public Vector3Tween(Vector3 from, Vector3 to, float t, int id)
         {
-            this.from      = from;
-            this.to        = to;
-            this.duration  = t;
-            this.id        = id;
+            Init(from, to, t);
+            this.id = id;
         }
 
         /// <summary>
@@ -24,7 +23,7 @@ namespace Platinio.TweenEngine
         /// </summary>
         public override void Update(float deltaTime)
         {
-            
+
             //wait a delay
             if (delay > 0.0f)
             {
@@ -40,19 +39,19 @@ namespace Platinio.TweenEngine
             //if time ends
             if (currentTime >= duration)
             {
-                
-                if(onUpdateVector3 != null)
+
+                if (onUpdateVector3 != null)
                     onUpdateVector3(to);
 
                 if (onUpdateVector2 != null)
-                    onUpdateVector2( to );
+                    onUpdateVector2(to);
 
                 onComplete();
                 return;
             }
 
             //get new value           
-            Vector3 value = EasingFunctions.ChangeVector(from , to , currentTime / duration , ease);
+            Vector3 value = EasingFunctions.ChangeVector(from, to, currentTime / duration, ease);
 
             //call update if we have it
             if (onUpdateVector3 != null)
@@ -60,6 +59,13 @@ namespace Platinio.TweenEngine
 
             if (onUpdateVector2 != null)
                 onUpdateVector2(value);
+        }
+
+        internal void Init(Vector3 from, Vector3 to, float time)
+        {
+            this.from = from;
+            this.to = to;
+            this.duration = time;
         }
         #endregion
     }
