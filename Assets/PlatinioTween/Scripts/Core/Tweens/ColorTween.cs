@@ -17,7 +17,7 @@ namespace Platinio.TweenEngine
 
         public override void Update(float deltaTime)
         {
-           
+
             //wait a delay
             if (delay > 0.0f)
             {
@@ -25,7 +25,7 @@ namespace Platinio.TweenEngine
                 return;
             }
 
-            base.Update( deltaTime );
+            base.Update(deltaTime);
 
             //start counting time
             currentTime += deltaTime;
@@ -34,7 +34,7 @@ namespace Platinio.TweenEngine
             if (currentTime >= duration)
             {
                 if (onUpdateColor != null)
-                    onUpdateColor( this.to );
+                    onUpdateColor(this.to);
 
                 onComplete();
                 return;
@@ -52,11 +52,18 @@ namespace Platinio.TweenEngine
             float alphaChange = this.to.a - this.from.a;
             float alphaValue = Equations.ChangeFloat( currentTime, this.from.a, alphaChange, duration, ease );
             */
-            Color color = Color.LerpUnclamped(from , to , EasingFunctions.ChangeFloat(0.0f , 1.0f , currentTime / duration , ease));
+            Color color = Color.LerpUnclamped(from, to, EasingFunctions.ChangeFloat(0.0f, 1.0f, currentTime / duration, ease));
 
             //call update if we have it
             if (onUpdateColor != null)
-                onUpdateColor( color );
+                onUpdateColor(color);
+        }
+
+        internal void Init(Color from, Color to, float t)
+        {
+            this.from = from;
+            this.to = to;
+            this.duration = t;
         }
     }
 

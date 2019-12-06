@@ -11,10 +11,15 @@ namespace Platinio.TweenEngine
         #region PUBLIC
         public ValueTween(float from, float to, float t, int id)
         {
+            this.id = id;
+            Init(from, to, t);
+        }
+
+        public void Init(float from, float to, float t)
+        {
             this.from = from;
             this.to = to;
             this.duration = t;
-            this.id = id;
         }
 
         /// <summary>
@@ -30,7 +35,7 @@ namespace Platinio.TweenEngine
                 return;
             }
 
-            base.Update( deltaTime );
+            base.Update(deltaTime);
 
             //start counting time
             currentTime += deltaTime;
@@ -40,20 +45,27 @@ namespace Platinio.TweenEngine
             {
 
                 if (onUpdateFloat != null)
-                    onUpdateFloat( to );
+                    onUpdateFloat(to);
 
                 onComplete();
                 return;
             }
 
             //get new value           
-            float value = EasingFunctions.ChangeFloat(from , to , currentTime / duration , ease);
+            float value = EasingFunctions.ChangeFloat(from, to, currentTime / duration, ease);
 
             //call update if we have it
             if (onUpdateFloat != null)
-                onUpdateFloat( value );
+                onUpdateFloat(value);
         }
         #endregion
+
+        public override void Reset()
+        {
+            base.Reset();
+            from = 0;
+            to = 0;
+        }
     }
 
 }

@@ -36,7 +36,7 @@ namespace Platinio.TweenEngine
         protected Action onComplete = null;
         protected Action onUpdate = null;
         protected Action<Vector3> onUpdateVector3 = null;
-        protected Action<float> onUpdateFloat = null;        
+        protected Action<float> onUpdateFloat = null;
         protected Action<Color> onUpdateColor = null;
         protected Action<Vector2> onUpdateVector2 = null;
         protected List<TimeEvent> events = new List<TimeEvent>();
@@ -56,11 +56,10 @@ namespace Platinio.TweenEngine
             if (events.Count > 0 && timeSinceStart >= events[0].Time)
             {
                 events[0].Action();
-                events.RemoveAt( 0 );
+                events.RemoveAt(0);
             }
 
-            if(onUpdate != null)
-                onUpdate();
+            onUpdate?.Invoke();
         }
 
         /// <summary>
@@ -75,11 +74,11 @@ namespace Platinio.TweenEngine
 
         public BaseTween SetEvent(Action action, float t)
         {
-            events.Add( new TimeEvent( action, t ) );
+            events.Add(new TimeEvent(action, t));
 
             //sort this list
             if (events.Count > 1)
-                events = events.OrderBy( o => o.Time ).ToList();
+                events = events.OrderBy(o => o.Time).ToList();
 
 
             return this;
@@ -135,7 +134,7 @@ namespace Platinio.TweenEngine
         {
             onUpdateColor += action;
             return this;
-        }       
+        }
 
         /// <summary>
         /// Set Callback for OnUpdate
@@ -146,12 +145,12 @@ namespace Platinio.TweenEngine
         {
             onUpdateFloat += action;
             return this;
-        }       
+        }
 
         public virtual BaseTween SetOwner(GameObject owner)
         {
             this.owner = owner;
-            PlatinioTween.instance.ProcessConnection( this );
+            PlatinioTween.instance.ProcessConnection(this);
             return this;
         }
 
@@ -161,6 +160,29 @@ namespace Platinio.TweenEngine
             return this;
         }
 
+        /// <summary>
+        /// Restore all fields to default
+        /// </summary>
+        public virtual void Reset()
+        {
+            id = 0;
+            delay = 0.0f;
+            startTime = 0.0f;
+            duration = 0.0f;
+            currentTime = 0.0f;
+            ease = Ease.Linear;
+            updateMode = UpdateMode.Update;
+            owner = null;
+            timeSinceStart = 0.0f;
+
+            onComplete = null;
+            onUpdate = null;
+            onUpdateVector3 = null;
+            onUpdateFloat = null;
+            onUpdateColor = null;
+            onUpdateVector2 = null;
+            events.Clear();
+        }
     }
 
     public class TimeEvent

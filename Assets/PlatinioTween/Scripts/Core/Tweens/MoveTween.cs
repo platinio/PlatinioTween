@@ -14,11 +14,15 @@ namespace Platinio.TweenEngine
         #region PUBLIC
         public MoveTween(Transform obj, Transform to, float t, int id)
         {
+            Init(obj, to, t);
+        }
+
+        public void Init(Transform obj, Transform to, float t)
+        {
             this.obj = obj;
             this.to = to;
             this.duration = t;
             this.initialPos = obj.position;
-            this.id = id;
         }
 
         /// <summary>
@@ -34,7 +38,7 @@ namespace Platinio.TweenEngine
                 return;
             }
 
-            base.Update( deltaTime );
+            base.Update(deltaTime);
 
             //start counting time
             currentTime += deltaTime;
@@ -54,7 +58,7 @@ namespace Platinio.TweenEngine
             //Vector3 change = to.position - initialPos;
             //obj.position = Equations.ChangeVector( currentTime, initialPos, change, duration, ease );
 
-            obj.position = EasingFunctions.ChangeVector(initialPos , to.position , currentTime / duration , ease);
+            obj.position = EasingFunctions.ChangeVector(initialPos, to.position, currentTime / duration, ease);
 
             CallOnUpdate();
 
@@ -62,12 +66,18 @@ namespace Platinio.TweenEngine
         #endregion
 
         private void CallOnUpdate()
-        {           
-            if (onUpdateVector3 != null)
-                onUpdateVector3( obj.position );
+        {
+            onUpdateVector3?.Invoke(obj.position);
 
-            if (onUpdateVector2 != null)
-                onUpdateVector2( obj.position );
+            onUpdateVector2?.Invoke(obj.position);
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            obj = null;
+            to = null;
+            initialPos = Vector3.zero;
         }
     }
 
