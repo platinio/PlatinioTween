@@ -67,9 +67,11 @@ namespace Platinio.TweenEngine
 
         private void CallOnUpdate()
         {
-            onUpdateVector3?.Invoke(obj.position);
+            if(onUpdateVector3 != null)
+                onUpdateVector3(obj.position);
 
-            onUpdateVector2?.Invoke(obj.position);
+            if(onUpdateVector2 != null)
+                onUpdateVector2(obj.position);
         }
 
         public override void Reset()

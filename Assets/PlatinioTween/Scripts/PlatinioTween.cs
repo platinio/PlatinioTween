@@ -13,7 +13,7 @@ namespace Platinio.TweenEngine
     public class PlatinioTween : Singleton<PlatinioTween>
     {
         #region PRIVATE
-        private ReadOnlyHashSet<BaseTween> tweens => TweenPool.activeTweens;
+        private List<BaseTween> tweens = TweenPool.activeTweens;
         private Dictionary<GameObject, List<int>> tweenConnections = new Dictionary<GameObject, List<int>>();
         private List<BaseTween> tweensToRemove = new List<BaseTween>();
         private bool areTweensDirty;
@@ -27,11 +27,11 @@ namespace Platinio.TweenEngine
 
         private void Update()
         {
-            Debug.Log($"active tweens: {tweens.Count}");
-            foreach (var tween in tweens)
+            Debug.Log("active tweens: " + tweens.Count );
+            for(int n = 0; n < tweens.Count; n++)
             {
-                if (tween.UpdateMode == UpdateMode.Update)
-                    tween.Update(Time.deltaTime);
+                if (tweens[n].UpdateMode == UpdateMode.Update)
+                    tweens[n].Update(Time.deltaTime);
             }
 
             CheckForTweensToRemove();
@@ -67,7 +67,7 @@ namespace Platinio.TweenEngine
             foreach (var tween in tweens)
             {
                 if (tween.UpdateMode == UpdateMode.FixedUpdate)
-                    tween.Update(Time.deltaTime);
+                    tween.Update(Time.fixedDeltaTime);
             }
             CheckForTweensToRemove();
         }
@@ -109,14 +109,16 @@ namespace Platinio.TweenEngine
 
         public void CancelTween(int id)
         {
-            foreach (var tween in tweens)
+
+            for (int n = 0; n < tweens.Count; n++)
             {
-                if (tween.ID == id)
+                if (tweens[n].ID == id)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    AddToTweensToBeRemoved( tweens[n] );
                     break;
                 }
             }
+           
         }
 
         public void CancelTween(BaseTween tween)

@@ -59,7 +59,8 @@ namespace Platinio.TweenEngine
                 events.RemoveAt(0);
             }
 
-            onUpdate?.Invoke();
+            if(onUpdate != null)
+                onUpdate();
         }
 
         /// <summary>

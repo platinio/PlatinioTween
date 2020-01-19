@@ -14,12 +14,12 @@ namespace Platinio.TweenEngine
 
         static int counter = 0;
 
-        static HashSet<BaseTween> _activeTweens = new HashSet<BaseTween>();
-        public static ReadOnlyHashSet<BaseTween> activeTweens;
+        static List<BaseTween> _activeTweens = new List<BaseTween>();
+        public static List<BaseTween> activeTweens;
 
         static TweenPool()
         {
-            activeTweens = new ReadOnlyHashSet<BaseTween>(_activeTweens);
+            activeTweens = _activeTweens;
         }
 
         private static int GenerateId()
@@ -43,26 +43,27 @@ namespace Platinio.TweenEngine
 
         private static void AddTweenToPool(BaseTween tween)
         {
-            switch (tween)
+            if (tween is ValueTween)
             {
-                case ValueTween t:
-                    valueTweens.Add(t);
-                    break;
-                case MoveTween t:
-                    moveTweens.Add(t);
-                    break;
-                case Vector2Tween t:
-                    vector2Tweens.Add(t);
-                    break;
-                case Vector3Tween t:
-                    vector3Tweens.Add(t);
-                    break;
-                case ColorTween t:
-                    colorTweens.Add(t);
-                    break;
-                default:
-                    break;
+                valueTweens.Add( tween as ValueTween );
             }
+            else if (tween is MoveTween)
+            {
+                moveTweens.Add( tween as MoveTween );
+            }
+            else if (tween is Vector2Tween)
+            {
+                vector2Tweens.Add( tween as Vector2Tween );
+            }
+            else if (tween is Vector3Tween)
+            {
+                vector3Tweens.Add( tween as Vector3Tween );
+            }
+            else if (tween is ColorTween)
+            {
+                colorTweens.Add(tween as ColorTween);
+            }
+
         }
 
         private static bool TryGetTween<T>(List<T> list, out T tween) where T : BaseTween

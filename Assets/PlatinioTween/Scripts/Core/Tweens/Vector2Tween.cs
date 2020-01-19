@@ -40,7 +40,8 @@ namespace Platinio.TweenEngine
             if (currentTime >= duration)
             {
 
-                onUpdateVector2?.Invoke(to);
+                if(onUpdateVector2 != null)
+                    onUpdateVector2(to);
 
                 onComplete();
                 return;
@@ -52,7 +53,8 @@ namespace Platinio.TweenEngine
             //Vector2 vector2Value = new Vector2(value.x , value.y);
 
             //call update if we have it
-            onUpdateVector2?.Invoke(value);
+            if(onUpdateVector2 != null)
+                onUpdateVector2(value);
         }
 
         internal void Init(Vector2 from, Vector2 to, float t)
