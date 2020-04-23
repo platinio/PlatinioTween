@@ -17,6 +17,7 @@ namespace Platinio
 		private void Awake()
 		{
 			maxHP = hp;
+			lifebarImg.color = gradient.Evaluate(1.0f);
 		}
 
 		public void HandleDamage(float dmg)
@@ -25,8 +26,9 @@ namespace Platinio
 
 			gameObject.CancelAllTweens();
 			float targetFill = hp / maxHP;
-			Debug.Log(targetFill);
-			lifebarImg.FillAmountTween(targetFill, 0.15f).SetEase(ease).SetOwner(gameObject);
+			//lifebarImg.color = gradient.Evaluate(targetFill);
+			lifebarImg.ColorTween(gradient.Evaluate(targetFill) , 0.35f).SetOwner(gameObject);
+			lifebarImg.FillAmountTween(targetFill, 0.35f).SetEase(ease).SetOwner(gameObject);
 			lifebarFollowImg.FillAmountTween(targetFill , followTime).SetEase(ease).SetOwner(gameObject);
 			
 		}
