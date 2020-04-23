@@ -25,8 +25,7 @@ namespace Platinio
 			hp = Mathf.Max(0.0f , hp - dmg);
 
 			gameObject.CancelAllTweens();
-			float targetFill = hp / maxHP;
-			//lifebarImg.color = gradient.Evaluate(targetFill);
+			float targetFill = hp / maxHP;			
 			lifebarImg.ColorTween(gradient.Evaluate(targetFill) , 0.35f).SetOwner(gameObject);
 			lifebarImg.FillAmountTween(targetFill, 0.35f).SetEase(ease).SetOwner(gameObject);
 			lifebarFollowImg.FillAmountTween(targetFill , followTime).SetEase(ease).SetOwner(gameObject);
