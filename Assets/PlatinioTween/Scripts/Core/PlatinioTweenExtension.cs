@@ -205,6 +205,11 @@ public static class PlatinioTweenExtension
         return PlatinioTween.instance.FadeAtSpeed(sprite , to , speed);
     }
 
+    public static BaseTween FadeOut(this CanvasGroup cg , float t)
+    {
+        return PlatinioTween.instance.FadeOut(cg, t);
+    }
+
     public static BaseTween FadeOut(this SpriteRenderer sprite, float t)
     {
         return PlatinioTween.instance.FadeOut(sprite , t);
@@ -335,9 +340,7 @@ public static class PlatinioTweenExtension
     public static BaseTween TranslateUIAtSpeed(this RectTransform rect, Vector2 translation, RectTransform canvas, float speed, PivotPreset pivotPreset = PivotPreset.MiddleCenter)
     {
         return PlatinioTween.instance.TranslateUIAtSpeed( rect, translation, canvas, speed, pivotPreset );
-    }
-
-
+    }    
 
     public static void CancelAllTweens(this GameObject go)
     {

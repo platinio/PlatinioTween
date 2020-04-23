@@ -27,7 +27,6 @@ namespace Platinio.TweenEngine
 
         private void Update()
         {
-            Debug.Log("active tweens: " + tweens.Count );
             for(int n = 0; n < tweens.Count; n++)
             {
                 if (tweens[n].UpdateMode == UpdateMode.Update)
@@ -141,6 +140,8 @@ namespace Platinio.TweenEngine
                 {
                     CancelTween(idList[n]);
                 }
+
+                tweenConnections.Remove(owner);
             }
         }
 
