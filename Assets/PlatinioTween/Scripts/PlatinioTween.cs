@@ -15,8 +15,6 @@ namespace Platinio.TweenEngine
         #region PRIVATE
         private List<BaseTween> tweens = TweenPool.activeTweens;
         private Dictionary<GameObject, List<int>> tweenConnections = new Dictionary<GameObject, List<int>>();
-        private List<BaseTween> tweensToRemove = new List<BaseTween>();
-        private bool areTweensDirty;
         #endregion
 
         #region UNITY_EVENTS
@@ -32,22 +30,8 @@ namespace Platinio.TweenEngine
                 if (tweens[n].UpdateMode == UpdateMode.Update)
                     tweens[n].Update(Time.deltaTime);
             }
-
-            CheckForTweensToRemove();
-        }
-
-        private void CheckForTweensToRemove()
-        {
-            if (areTweensDirty)
-            {
-                foreach (var tween in tweensToRemove)
-                {
-                    TweenPool.FinishTween(tween);
-                }
-
-                tweensToRemove.Clear();
-                areTweensDirty = false;
-            }
+                       
+            Debug.Log("Active tweens " + tweens.Count);
         }
 
 
@@ -58,7 +42,7 @@ namespace Platinio.TweenEngine
                 if (tween.UpdateMode == UpdateMode.LateUpdate)
                     tween.Update(Time.deltaTime);
             }
-            CheckForTweensToRemove();
+          
         }
 
         private void FixedUpdate()
@@ -68,22 +52,16 @@ namespace Platinio.TweenEngine
                 if (tween.UpdateMode == UpdateMode.FixedUpdate)
                     tween.Update(Time.fixedDeltaTime);
             }
-            CheckForTweensToRemove();
+           
         }
 
         #endregion
 
 
-        private void AddToTweensToBeRemoved(BaseTween tween)
-        {
-            areTweensDirty = true;
-            tweensToRemove.Add(tween);
-        }
-
 
         private BaseTween ProcessTween(BaseTween tween)
         {
-            tween.SetOnComplete(() => AddToTweensToBeRemoved(tween));
+            tween.SetOnComplete(() => CancelTween(tween));
             return tween;
         }
 
@@ -112,12 +90,12 @@ namespace Platinio.TweenEngine
             for (int n = 0; n < tweens.Count; n++)
             {
                 if (tweens[n].ID == id)
-                {
-                    AddToTweensToBeRemoved( tweens[n] );
+                {                   
+                    tweens.Remove(tweens[n]);
                     break;
                 }
-            }
-           
+            }            
+
         }
 
         public void CancelTween(BaseTween tween)
@@ -138,7 +116,7 @@ namespace Platinio.TweenEngine
 
                 for (int n = 0; n < idList.Count; n++)
                 {
-                    CancelTween(idList[n]);
+                    CancelTween(idList[n]);                    
                 }
 
                 tweenConnections.Remove(owner);
@@ -153,7 +131,7 @@ namespace Platinio.TweenEngine
             {
                 if (t == null)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    CancelTween(tween);
                     return;
                 }
 
@@ -332,7 +310,7 @@ namespace Platinio.TweenEngine
             {
                 if (t == null)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    CancelTween(tween);
                     return;
                 }
 
@@ -384,7 +362,7 @@ namespace Platinio.TweenEngine
             {
                 if (cg == null)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    CancelTween(tween);
                     return;
                 }
 
@@ -406,7 +384,7 @@ namespace Platinio.TweenEngine
             {
                 if (image == null)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    CancelTween(tween);
                     return;
                 }
 
@@ -459,7 +437,7 @@ namespace Platinio.TweenEngine
             {
                 if (sprite == null)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    CancelTween(tween);
                     return;
                 }
 
@@ -541,7 +519,7 @@ namespace Platinio.TweenEngine
             {
                 if (image == null)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    CancelTween(tween);
                     return;
                 }
 
@@ -566,6 +544,35 @@ namespace Platinio.TweenEngine
         {
             float t = CalculateColorDistance(from, to) / speed;
             return ColorTween(from, to, t);
+        }
+        #endregion
+
+        #region FILL_AMOUNT_TWEEN
+        public BaseTween FillAmountTween(Image img, float to, float t)
+        {
+            BaseTween tween = ValueTween(img.fillAmount, to, t);
+            tween.SetOnUpdateFloat( delegate (float v)
+            {
+                if (img != null)                
+                    img.fillAmount = v;               
+                else
+                    CancelTween(tween);
+
+            } );
+            return tween; 
+        }
+
+        public BaseTween FillAmountTweenAtSpeed(Image img, float to, float speed)
+        {
+            BaseTween tween = ValueTweenAtSpeed(img.fillAmount, to, speed);
+            tween.SetOnUpdateFloat(delegate (float v)
+            {
+                if (img != null)
+                    img.fillAmount = v;
+                else
+                    CancelTween(tween);
+            });
+            return tween;
         }
         #endregion
 
@@ -631,7 +638,7 @@ namespace Platinio.TweenEngine
             {
                 if (obj == null)
                 {
-                    AddToTweensToBeRemoved(tween);
+                    CancelTween(tween);
                     return;
                 }
 

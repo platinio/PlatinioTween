@@ -16,6 +16,7 @@ namespace Platinio.TweenEngine
     /// <summary>
     /// Base tween class
     /// </summary>
+    
     public abstract class BaseTween
     {
         #region PROTECTED

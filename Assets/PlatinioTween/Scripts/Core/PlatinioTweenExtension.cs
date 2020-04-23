@@ -250,6 +250,16 @@ public static class PlatinioTweenExtension
         return PlatinioTween.instance.ColorTweenAtSpeed(img , to , speed);
     }
 
+    public static BaseTween FillAmountTween(this Image img , float to , float t)
+    {
+        return PlatinioTween.instance.FillAmountTween(img , to , t);
+    }
+
+    public static BaseTween FillAmountTweenAtSpeed(this Image img, float to, float speed)
+    {
+        return PlatinioTween.instance.FillAmountTween(img, to, speed);
+    }
+
     public static BaseTween Move(this Transform obj, Transform to, float t)
     {
         return PlatinioTween.instance.Move(obj , to , t);
