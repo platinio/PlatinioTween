@@ -40,6 +40,7 @@ namespace Platinio.TweenEngine
         protected Action<float> onUpdateFloat = null;
         protected Action<Color> onUpdateColor = null;
         protected Action<Vector2> onUpdateVector2 = null;
+        protected Action<Quaternion> onUpdateQuaternion = null;
         protected List<TimeEvent> events = new List<TimeEvent>();
         #endregion
 
@@ -146,6 +147,17 @@ namespace Platinio.TweenEngine
         public virtual BaseTween SetOnUpdateFloat(Action<float> action)
         {
             onUpdateFloat += action;
+            return this;
+        }
+
+        /// <summary>
+        /// Set Callback for OnUpdate
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public virtual BaseTween SetOnUpdateQuaternion(Action<Quaternion> action)
+        {
+            onUpdateQuaternion += action;
             return this;
         }
 
