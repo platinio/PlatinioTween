@@ -11,6 +11,7 @@ namespace Platinio.TweenEngine
         static List<Vector3Tween> vector3Tweens = new List<Vector3Tween>();
         static List<MoveTween> moveTweens = new List<MoveTween>();
         static List<ColorTween> colorTweens = new List<ColorTween>();
+        static List<QuaternionTween> quaternionTweens = new List<QuaternionTween>();
 
         static int counter = 0;
 
@@ -45,23 +46,27 @@ namespace Platinio.TweenEngine
         {
             if (tween is ValueTween)
             {
-                valueTweens.Add( tween as ValueTween );
+                valueTweens.Add(tween as ValueTween);
             }
             else if (tween is MoveTween)
             {
-                moveTweens.Add( tween as MoveTween );
+                moveTweens.Add(tween as MoveTween);
             }
             else if (tween is Vector2Tween)
             {
-                vector2Tweens.Add( tween as Vector2Tween );
+                vector2Tweens.Add(tween as Vector2Tween);
             }
             else if (tween is Vector3Tween)
             {
-                vector3Tweens.Add( tween as Vector3Tween );
+                vector3Tweens.Add(tween as Vector3Tween);
             }
             else if (tween is ColorTween)
             {
                 colorTweens.Add(tween as ColorTween);
+            }
+            else if (tween is QuaternionTween)
+            {
+                quaternionTweens.Add(tween as QuaternionTween);
             }
 
         }
@@ -157,6 +162,21 @@ namespace Platinio.TweenEngine
             else
             {
                 tween = new ColorTween(from, to, t, GenerateId());
+            }
+            _activeTweens.Add(tween);
+            return tween;
+        }
+
+        internal static QuaternionTween GetQuaternionTween(Quaternion from, Quaternion to, float t)
+        {
+            QuaternionTween tween;
+            if (TryGetTween(quaternionTweens , out tween))
+            {
+                tween.Init(from, to, t);
+            }
+            else
+            {
+                tween = new QuaternionTween(from, to, t, GenerateId());
             }
             _activeTweens.Add(tween);
             return tween;
