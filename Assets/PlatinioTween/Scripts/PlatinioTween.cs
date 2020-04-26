@@ -302,7 +302,20 @@ namespace Platinio.TweenEngine
         #endregion
 
         #region ROTATE_TWEENS
-                
+
+        public BaseTween RotateTween(Transform t, Quaternion to, float time)
+        {
+            QuaternionTween tween = TweenPool.GetQuaternionTween(t.rotation, to, time);
+            return ProcessTween(tween);
+        }
+
+        public BaseTween RotateTween(Transform t , Vector3 to , float time)
+        {
+            Quaternion toRotation = Quaternion.Euler(to);
+            QuaternionTween tween = TweenPool.GetQuaternionTween(t.rotation, toRotation, time);
+            return ProcessTween(tween);
+        }
+
         public BaseTween RotateTween(Transform t, Vector3 axis, float to, float time)
         {
             Quaternion toRotation = Quaternion.Euler(axis * to);
