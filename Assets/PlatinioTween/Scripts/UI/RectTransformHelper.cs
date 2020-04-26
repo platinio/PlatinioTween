@@ -92,6 +92,27 @@ namespace Platinio.UI
             return new Vector2( rect.rect.size.x / RequestCanvas().sizeDelta.x, rect.rect.size.y / RequestCanvas().sizeDelta.y );
         }
 
+        public static void UpdatePivot(this RectTransform rect , PivotPreset pivot)
+        {
+            UpdatePivot(rect , GetPivot(pivot));
+        }
+
+        public static void UpdatePivot(this RectTransform rect, Vector2 pivot)
+        {
+            RectTransform canvas = RequestCanvas();
+
+            Vector2 size = rect.rect.size;
+            Vector2 deltaPivot = rect.pivot - pivot;
+
+            //Vector2 deltaPosition = new Vector2(deltaPivot.x * size.x, deltaPivot.y * size.y);
+            Vector2 deltaPosition = new Vector2( rect.right.x , rect.right.y ).normalized * rect.rect.size.x * deltaPivot.x;
+            deltaPosition += new Vector2(rect.up.x, rect.up.y).normalized * rect.rect.size.y * deltaPivot.y;
+
+            rect.pivot = pivot;
+            rect.anchoredPosition -= deltaPosition;
+
+        }
+
         private static RectTransform RequestCanvas()
         {
             //we have a canvas in cache?
@@ -141,7 +162,35 @@ namespace Platinio.UI
 
         }
 
-        
+        private static Vector2 GetPivot(PivotPreset pivot)
+        {
+            switch (pivot)
+            {
+                case PivotPreset.UpperLeft:
+                    return new Vector2(0.0f, 1.0f);
+                case PivotPreset.UpperCenter:
+                    return new Vector2(0.5f, 1.0f);
+                case PivotPreset.UpperRight:
+                    return new Vector2(1.0f, 1.0f);
+                case PivotPreset.MiddleLeft:
+                    return new Vector2(0.0f, 0.5f);
+                case PivotPreset.MiddleCenter:
+                    return new Vector2(0.5f, 0.5f);
+                case PivotPreset.MiddleRight:
+                    return new Vector2(1.0f, 0.5f);
+                case PivotPreset.LowerLeft:
+                    return new Vector2(0.0f, 0.0f);
+                case PivotPreset.LowerCenter:
+                    return new Vector2(0.5f, 0.0f);
+                case PivotPreset.LowerRight:
+                    return new Vector2(1.0f, 0.0f);
+            }
+
+            return Vector2.zero;
+
+        }
+
+
     }
 }
 
