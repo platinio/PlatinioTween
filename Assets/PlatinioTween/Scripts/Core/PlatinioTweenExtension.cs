@@ -140,6 +140,21 @@ public static class PlatinioTweenExtension
         return PlatinioTween.instance.RotateTween(rect , axis , to , time);
     }
 
+    public static BaseTween RotateTween(this Transform t, Vector3 to, float time)
+    {
+        return PlatinioTween.instance.RotateTween(t, to, time);
+    }
+
+    public static BaseTween RotateTween(this GameObject go, Vector3 to, float time)
+    {
+        return PlatinioTween.instance.RotateTween(go.transform, to, time);
+    }
+
+    public static BaseTween RotateTween(this RectTransform rect, Vector3 to, float time)
+    {
+        return PlatinioTween.instance.RotateTween(rect, to, time);
+    }
+
     public static BaseTween FadeOutAtSpeed(this CanvasGroup cg, float speed)
     {
         return PlatinioTween.instance.FadeOutAtSpeed(cg , speed);
