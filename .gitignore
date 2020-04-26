@@ -37,3 +37,7 @@ Thumbs.db
 Assets/scenes/sandboxes/*.unity*
 Assets/IgnoreByGit/
 .vs/
+Assets/AssetStoreTools.meta
+Assets/AssetStoreTools/Editor.meta
+Assets/AssetStoreTools/Editor/AssetStoreTools.dll
+Assets/AssetStoreTools/Editor/AssetStoreTools.dll.meta
