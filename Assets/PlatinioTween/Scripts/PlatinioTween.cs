@@ -29,9 +29,8 @@ namespace Platinio.TweenEngine
             {
                 if (tweens[n].UpdateMode == UpdateMode.Update)
                     tweens[n].Update(Time.deltaTime);
-            }
-                       
-            Debug.Log("Active tweens " + tweens.Count);
+            }                      
+
         }
 
 
