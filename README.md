@@ -3,9 +3,10 @@ PlatinioTween
 Copyright (c) 2017 -2019 Unity Project by James Roman
 
 
+
 What is this?
 ==============
-This is a Unity3D Asset that let you create animations by code, and works very well animating UI.
+This is a Unity3D Asset that let you create animations by code, and works very well animating UI, [here](https://www.youtube.com/watch?v=tv0UpQat9EA)  you can see a tutorial.
 
 Getting started
 ==============
