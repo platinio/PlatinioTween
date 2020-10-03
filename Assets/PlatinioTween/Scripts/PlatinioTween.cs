@@ -27,8 +27,16 @@ namespace Platinio.TweenEngine
         {
             for(int n = 0; n < tweens.Count; n++)
             {
+                int lastTweenSize = tweens.Count;
+                
                 if (tweens[n].UpdateMode == UpdateMode.Update)
                     tweens[n].Update(Time.deltaTime);
+                
+                //was any tween remove in this update?
+                if (lastTweenSize != tweens.Count)
+                {
+                    n--;
+                }
             }                      
 
         }
@@ -36,20 +44,35 @@ namespace Platinio.TweenEngine
 
         private void LateUpdate()
         {
-            foreach (var tween in tweens)
+            for (int n = 0; n < tweens.Count; n++)
             {
-                if (tween.UpdateMode == UpdateMode.LateUpdate)
-                    tween.Update(Time.deltaTime);
+                int lastTweenSize = tweens.Count;
+
+                if (tweens[n].UpdateMode == UpdateMode.LateUpdate)
+                    tweens[n].Update(Time.deltaTime);
+
+                //was any tween remove in this update?
+                if (lastTweenSize != tweens.Count)
+                {
+                    n--;
+                }
             }
-          
         }
 
         private void FixedUpdate()
         {
-            foreach (var tween in tweens)
+            for (int n = 0; n < tweens.Count; n++)
             {
-                if (tween.UpdateMode == UpdateMode.FixedUpdate)
-                    tween.Update(Time.fixedDeltaTime);
+                int lastTweenSize = tweens.Count;
+
+                if (tweens[n].UpdateMode == UpdateMode.FixedUpdate)
+                    tweens[n].Update(Time.deltaTime);
+
+                //was any tween remove in this update?
+                if (lastTweenSize != tweens.Count)
+                {
+                    n--;
+                }
             }
            
         }
