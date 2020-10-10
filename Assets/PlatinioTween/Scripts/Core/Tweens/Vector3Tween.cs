@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Platinio.TweenEngine
 {
@@ -23,6 +22,8 @@ namespace Platinio.TweenEngine
         /// </summary>
         public override void Update(float deltaTime)
         {
+            if(isPause)
+                return;
 
             //wait a delay
             if (delay > 0.0f)
@@ -67,6 +68,13 @@ namespace Platinio.TweenEngine
             this.to = to;
             this.duration = time;
         }
+
+        public override void ReplayReset()
+        {
+            base.ReplayReset();
+            Init(from, to, duration);
+        }
+
         #endregion
     }
 

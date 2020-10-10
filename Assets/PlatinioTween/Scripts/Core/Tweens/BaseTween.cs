@@ -26,12 +26,19 @@ namespace Platinio.TweenEngine
         protected float duration = 0.0f;
         protected float currentTime = 0.0f;
         protected Ease ease = Ease.Linear;
+        protected bool isPause = false;
+        protected bool isComplete = false;
         protected UpdateMode updateMode = UpdateMode.Update;
         protected GameObject owner = null;
         private float timeSinceStart = 0.0f;
         #endregion
 
         public int ID { get { return id; } }
+        public bool IsComplete 
+        { 
+            get { return isComplete; }
+            set { isComplete = value; }
+        }
 
         #region EVENTS
         protected Action onComplete = null;
@@ -47,6 +54,7 @@ namespace Platinio.TweenEngine
         public GameObject Owner { get { return owner; } }
         public UpdateMode UpdateMode { get { return updateMode; } }
 
+        public Action PauseReset = null;
 
         /// <summary>
         /// Called to update this tween
@@ -63,6 +71,26 @@ namespace Platinio.TweenEngine
 
             if(onUpdate != null)
                 onUpdate();
+        }
+
+        public virtual BaseTween SetIsPause(bool value)
+        {
+            if (isPause && !value)
+            {
+                if(PauseReset != null)
+                    PauseReset.Invoke();
+            }
+
+            isPause = value;
+            return this;
+        }
+
+        public virtual void ReplayReset()
+        {
+            isComplete = false;
+            isPause = false;
+            currentTime = 0.0f;
+            onComplete = null;
         }
 
         /// <summary>
@@ -188,6 +216,8 @@ namespace Platinio.TweenEngine
             updateMode = UpdateMode.Update;
             owner = null;
             timeSinceStart = 0.0f;
+            isComplete = false;
+            isPause = false;
 
             onComplete = null;
             onUpdate = null;
@@ -195,6 +225,7 @@ namespace Platinio.TweenEngine
             onUpdateFloat = null;
             onUpdateColor = null;
             onUpdateVector2 = null;
+            PauseReset = null;
             events.Clear();
         }
     }

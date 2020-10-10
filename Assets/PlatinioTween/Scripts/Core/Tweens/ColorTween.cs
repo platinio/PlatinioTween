@@ -17,7 +17,9 @@ namespace Platinio.TweenEngine
 
         public override void Update(float deltaTime)
         {
-
+            if(isPause)
+                return;
+            
             //wait a delay
             if (delay > 0.0f)
             {

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using Platinio.UI;
+using UnityEngine.Purchasing;
 
 namespace Platinio.TweenEngine
 {
@@ -17,6 +18,8 @@ namespace Platinio.TweenEngine
         private Dictionary<GameObject, List<int>> tweenConnections = new Dictionary<GameObject, List<int>>();
         #endregion
 
+        public Action<float> OnUpdate;
+        
         #region UNITY_EVENTS
         protected override void Awake()
         {
@@ -25,6 +28,9 @@ namespace Platinio.TweenEngine
 
         private void Update()
         {
+            if(OnUpdate != null)
+                OnUpdate.Invoke(Time.deltaTime);
+            
             for(int n = 0; n < tweens.Count; n++)
             {
                 int lastTweenSize = tweens.Count;
@@ -84,6 +90,7 @@ namespace Platinio.TweenEngine
         private BaseTween ProcessTween(BaseTween tween)
         {
             tween.SetOnComplete(() => CancelTween(tween));
+            tween.SetOnComplete(() => tween.IsComplete = true);
             return tween;
         }
 
@@ -149,6 +156,7 @@ namespace Platinio.TweenEngine
         public BaseTween ScaleTween(Transform t, Vector3 to, float time)
         {
             Vector3Tween tween = TweenPool.GetVector3Tween(t.localScale, to, time);
+            tween.PauseReset += () => tween.Init(t.localScale, to, time);
             tween.SetOnUpdateVector3(delegate (Vector3 v)
             {
                 if (t == null)
@@ -672,6 +680,7 @@ namespace Platinio.TweenEngine
         public BaseTween Move(Transform obj, Vector3 to, float t)
         {
             Vector3Tween tween = TweenPool.GetVector3Tween(obj.position, to, t);
+            tween.PauseReset += () => tween.Init(obj.position, to, t);
             tween.SetOnUpdateVector3((Vector3 pos) =>
             {
                 if (obj == null)

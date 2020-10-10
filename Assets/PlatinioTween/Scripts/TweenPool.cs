@@ -44,6 +44,7 @@ namespace Platinio.TweenEngine
 
         private static void AddTweenToPool(BaseTween tween)
         {
+            Debug.LogError("adding tween to pool");
             if (tween is ValueTween)
             {
                 valueTweens.Add(tween as ValueTween);
