@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace Platinio.TweenEngine
 {
+	public enum PlayMode
+	{
+		Append,
+		Join
+	}
+
 	public class Sequence : IRecyclable
 	{
 		private List<BaseTween> tweenList = new List<BaseTween>();
@@ -13,7 +19,7 @@ namespace Platinio.TweenEngine
 		private BaseTween head = null;
 		private List<Command> commandQueue = new List<Command>();
 		private int loops = 0;
-		private bool ignoreAdds = false;
+		private bool ignoreCommands = false;
 
 		public Action OnComplete = null;
 		public bool CanRecycle { get; private set; }
@@ -57,13 +63,12 @@ namespace Platinio.TweenEngine
 
 		private void RunAigan()
 		{
-			
 			head = null;
 			tweenList.Clear();
 			timer = 0.0f;
 			OnComplete = null;
 			OnComplete += CheckLoops;
-			ignoreAdds = true;
+			ignoreCommands = true;
 			
 			for (int n = 0; n < commandQueue.Count; n++)
 			{
@@ -76,11 +81,12 @@ namespace Platinio.TweenEngine
 		{
 			if (ShouldPlayInmediatly())
 			{
-				PlayTweenInmediatly(tween, false);
+				PlayTweenInmediatly(tween);
+				head = tween;
 				return;
 			}
 			
-			PlayTweenOnComplete(tween, head);
+			PlayTweenOnComplete(tween, head, PlayMode.Append);
 			head = tween;
 		}
 		
@@ -88,30 +94,25 @@ namespace Platinio.TweenEngine
 		{
 			if (ShouldPlayInmediatly())
 			{
-				PlayTweenInmediatly(tween, true);
+				PlayTweenInmediatly(tween);
 				return;
 			}
 			
-			PlayTweenOnComplete(tween, GetPenultimate());
+			PlayTweenOnComplete(tween, GetPenultimate(), PlayMode.Join);
 		}
 
-		private void PlayTweenInmediatly(BaseTween tween, bool join)
+		private void PlayTweenInmediatly(BaseTween tween)
 		{
 			tweenList.Add(tween);
 			tween.SetOnComplete(CheckIfSequenceIsComplete);
 
-			if (!join)
-			{
-				head = tween;
-			}
-
-			if (!ignoreAdds)
+			if (!ignoreCommands)
 			{
 				commandQueue.Add(new AppendTweenCommand(tween, this));
 			}
 		}
 
-		private void PlayTweenOnComplete(BaseTween tween, BaseTween previousTween)
+		private void PlayTweenOnComplete(BaseTween tween, BaseTween previousTween, PlayMode playMode)
 		{
 			//pause the tween until it can actually run
 			tween.SetIsPause(true);
@@ -119,9 +120,21 @@ namespace Platinio.TweenEngine
 			tweenList.Add(tween);
 			tween.SetOnComplete(CheckIfSequenceIsComplete);
 
-			if (!ignoreAdds)
+			if (!ignoreCommands)
 			{
-				commandQueue.Add(new InsertTweenCommand(tween, this));
+				commandQueue.Add(GetCommand(playMode, tween));
+			}
+		}
+
+		private Command GetCommand(PlayMode mode, BaseTween tween)
+		{
+			if (mode == PlayMode.Append)
+			{
+				return  new AppendTweenCommand(tween, this);
+			}
+			else
+			{
+				return new JoinTweenCommand(tween, this);
 			}
 		}
 
@@ -143,6 +156,17 @@ namespace Platinio.TweenEngine
 			this.loops = loops - 1;
 		}
 
+		public void Append(Action callback)
+		{
+			if (ShouldPlayInmediatly())
+			{
+				callback.Invoke();
+				return;
+			}
+			
+			head.SetOnComplete(callback);
+		}
+
 		public void Join(Action callback)
 		{
 			if (ShouldPlayInmediatly())
@@ -150,11 +174,9 @@ namespace Platinio.TweenEngine
 				callback.Invoke();
 				return;
 			}
-
-			head.SetOnComplete(callback);
+			
+			GetPenultimate().SetOnComplete(callback);
 		}
-
-		
 
 		public void RunAtTime(Action callback, float time)
 		{
@@ -245,15 +267,14 @@ namespace Platinio.TweenEngine
 		}
 	}
 	
-	public class InsertTweenCommand : Command
+	public class JoinTweenCommand : Command
 	{
 		public BaseTween tween;
 
-		public InsertTweenCommand(BaseTween tween, Sequence sequence) : base(sequence)
+		public JoinTweenCommand(BaseTween tween, Sequence sequence) : base(sequence)
 		{
 			this.tween = tween;
 		}
-
 
 		public override void Execute()
 		{
