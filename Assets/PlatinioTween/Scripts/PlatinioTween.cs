@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using Platinio.UI;
-using UnityEngine.Purchasing;
 
 namespace Platinio.TweenEngine
 {
@@ -120,7 +119,7 @@ namespace Platinio.TweenEngine
             {
                 if (tweens[n].ID == id)
                 {                   
-                    tweens.Remove(tweens[n]);
+                    //tweens.Remove(tweens[n]);
                     break;
                 }
             }            

@@ -1,9 +1,9 @@
-﻿
+﻿using System;
 namespace Platinio.TweenEngine
 {
-	public interface IRecyclable 
+	public interface IRecyclable <T>
 	{
-		bool CanRecycle { get; }
+		Action<T> Recycle { get; set; }
 	}
 
 }

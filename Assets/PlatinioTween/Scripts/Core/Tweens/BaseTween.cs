@@ -17,7 +17,7 @@ namespace Platinio.TweenEngine
     /// Base tween class
     /// </summary>
     
-    public abstract class BaseTween
+    public abstract class BaseTween : IRecyclable<BaseTween>
     {
         #region PROTECTED
         protected int id = 0;
@@ -49,12 +49,27 @@ namespace Platinio.TweenEngine
         protected Action<Vector2> onUpdateVector2 = null;
         protected Action<Quaternion> onUpdateQuaternion = null;
         protected List<TimeEvent> events = new List<TimeEvent>();
+        public Action<BaseTween> Recycle { get; set; }
         #endregion
 
         public GameObject Owner { get { return owner; } }
         public UpdateMode UpdateMode { get { return updateMode; } }
+        public bool HandleBySequence { get; set; }
 
         public Action PauseReset = null;
+
+        public BaseTween()
+        {
+            onComplete += CheckIfTweenIsComplete;
+        }
+
+        private void CheckIfTweenIsComplete()
+        {
+            if (!HandleBySequence)
+            {
+                Recycle(this);
+            }            
+        }
 
         /// <summary>
         /// Called to update this tween
@@ -218,6 +233,7 @@ namespace Platinio.TweenEngine
             timeSinceStart = 0.0f;
             isComplete = false;
             isPause = false;
+            HandleBySequence = false;
 
             onComplete = null;
             onUpdate = null;
@@ -227,7 +243,11 @@ namespace Platinio.TweenEngine
             onUpdateVector2 = null;
             PauseReset = null;
             events.Clear();
+
+            onComplete += CheckIfTweenIsComplete;
         }
+
+        
     }
 
     public class TimeEvent

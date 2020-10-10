@@ -44,7 +44,6 @@ namespace Platinio.TweenEngine
 
         private static void AddTweenToPool(BaseTween tween)
         {
-            Debug.LogError("adding tween to pool");
             if (tween is ValueTween)
             {
                 valueTweens.Add(tween as ValueTween);
@@ -100,6 +99,7 @@ namespace Platinio.TweenEngine
             else
             {
                 tween = new ValueTween(start, end, t, GenerateId());
+                tween.Recycle = FinishTween;
             }
 
             _activeTweens.Add(tween);
@@ -116,6 +116,7 @@ namespace Platinio.TweenEngine
             else
             {
                 tween = new MoveTween(obj, to, t, GenerateId());
+                tween.Recycle = FinishTween;
             }
 
             _activeTweens.Add(tween);
@@ -132,6 +133,7 @@ namespace Platinio.TweenEngine
             else
             {
                 tween = new Vector3Tween(from, to, time, GenerateId());
+                tween.Recycle = FinishTween;
             }
             _activeTweens.Add(tween);
             return tween;
@@ -147,6 +149,7 @@ namespace Platinio.TweenEngine
             else
             {
                 tween = new Vector2Tween(from, to, t, GenerateId());
+                tween.Recycle = FinishTween;
             }
 
             _activeTweens.Add(tween);
@@ -163,6 +166,7 @@ namespace Platinio.TweenEngine
             else
             {
                 tween = new ColorTween(from, to, t, GenerateId());
+                tween.Recycle = FinishTween;
             }
             _activeTweens.Add(tween);
             return tween;
@@ -178,6 +182,7 @@ namespace Platinio.TweenEngine
             else
             {
                 tween = new QuaternionTween(from, to, t, GenerateId());
+                tween.Recycle = FinishTween;
             }
             _activeTweens.Add(tween);
             return tween;

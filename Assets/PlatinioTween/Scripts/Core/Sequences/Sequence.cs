@@ -10,7 +10,7 @@ namespace Platinio.TweenEngine
 		Join
 	}
 
-	public class Sequence : IRecyclable
+	public class Sequence : IRecyclable<Sequence>
 	{
 		private List<BaseTween> tweenList = new List<BaseTween>();
 		private List<TimeEvent> timeEvents = new List<TimeEvent>();
@@ -22,11 +22,11 @@ namespace Platinio.TweenEngine
 		private bool ignoreCommands = false;
 
 		public Action OnComplete = null;
-		public bool CanRecycle { get; private set; }
+		
+		public Action<Sequence> Recycle { get; set; }
 
 		public Sequence()
 		{
-			CanRecycle = false;
 			OnComplete += CheckLoops;
 		}
 
@@ -53,20 +53,33 @@ namespace Platinio.TweenEngine
 
 		private void CheckLoops()
 		{
+			tweenList.Clear();
+			
 			if (loops < 0 || loops > 0)
 			{
 				loops--;
-				Reset();
 				RunAigan();
+			}
+			else
+			{
+				
+				//recicle all tweens
+				foreach (var tween in tweenList)
+				{
+					tween.Recycle(tween);
+				}
+				
+				
+				//we are ready to let this object go
+				Recycle?.Invoke(this);
 			}
 		}
 
 		private void RunAigan()
 		{
-			head = null;
-			tweenList.Clear();
 			timer = 0.0f;
 			OnComplete = null;
+			
 			OnComplete += CheckLoops;
 			ignoreCommands = true;
 			
@@ -79,9 +92,11 @@ namespace Platinio.TweenEngine
 
 		public void Append(BaseTween tween)
 		{
+			tween.HandleBySequence = true;
+			
 			if (ShouldPlayInmediatly())
 			{
-				PlayTweenInmediatly(tween);
+				PlayTweenInmediatly(tween, PlayMode.Append);
 				head = tween;
 				return;
 			}
@@ -92,36 +107,46 @@ namespace Platinio.TweenEngine
 		
 		public void Join(BaseTween tween)
 		{
+			tween.HandleBySequence = true;
+			
 			if (ShouldPlayInmediatly())
 			{
-				PlayTweenInmediatly(tween);
+				PlayTweenInmediatly(tween, PlayMode.Join);
 				return;
 			}
-			
-			PlayTweenOnComplete(tween, GetPenultimate(), PlayMode.Join);
+
+			var tweenP = GetPenultimate();
+			PlayTweenOnComplete(tween, tweenP, PlayMode.Join);
 		}
 
-		private void PlayTweenInmediatly(BaseTween tween)
+		private void PlayTweenInmediatly(BaseTween tween, PlayMode playMode)
 		{
 			tweenList.Add(tween);
+			
 			tween.SetOnComplete(CheckIfSequenceIsComplete);
+			tween.SetOnComplete(() => tween.SetIsPause(true));
 
 			if (!ignoreCommands)
 			{
-				commandQueue.Add(new AppendTweenCommand(tween, this));
+				
+				commandQueue.Add(GetCommand(playMode, tween));
 			}
 		}
 
 		private void PlayTweenOnComplete(BaseTween tween, BaseTween previousTween, PlayMode playMode)
 		{
+			tweenList.Add(tween);
+			
 			//pause the tween until it can actually run
 			tween.SetIsPause(true);
+			tween.SetOnComplete(() => tween.SetIsPause(true));
 			previousTween.SetOnComplete(delegate { RunTween(tween); });
-			tweenList.Add(tween);
+			
 			tween.SetOnComplete(CheckIfSequenceIsComplete);
 
 			if (!ignoreCommands)
 			{
+				
 				commandQueue.Add(GetCommand(playMode, tween));
 			}
 		}
@@ -141,11 +166,6 @@ namespace Platinio.TweenEngine
 		private bool ShouldPlayInmediatly()
 		{
 			return head == null || head.IsComplete;
-		}
-
-		private BaseTween GetLastTween()
-		{
-			return tweenList[tweenList.Count - 1];
 		}
 
 		public void SetLoops(int loops)
@@ -195,7 +215,6 @@ namespace Platinio.TweenEngine
 			timeEvents.Clear();
 			timer = 0.0f;
 			OnComplete = null;
-			CanRecycle = false;
 		}
 
 		private void RunTween(BaseTween tween)
@@ -205,20 +224,14 @@ namespace Platinio.TweenEngine
 
 		private void CheckIfSequenceIsComplete()
 		{
-			Debug.LogError("checking if sequence is complete");
 			foreach (var tween in tweenList)
 			{
 				if (!tween.IsComplete)
 				{
-					Debug.LogError("tween is incomplete");
 					return;
 				}
 			}
-			
-			Debug.LogError("sequence is complete");
-			
-			//CanRecycle = true;
-			
+
 			if(OnComplete != null)
 				OnComplete.Invoke();
 		}
@@ -260,9 +273,7 @@ namespace Platinio.TweenEngine
 		public override void Execute()
 		{
 			tween.ReplayReset();
-			TweenPool.activeTweens.Add(tween);
 			tween.SetOnComplete(() => tween.IsComplete = true);
-			tween.SetOnComplete(() => TweenPool.activeTweens.Remove(tween));
 			sequence.Append(tween);
 		}
 	}
@@ -279,9 +290,7 @@ namespace Platinio.TweenEngine
 		public override void Execute()
 		{
 			tween.ReplayReset();
-			TweenPool.activeTweens.Add(tween);
 			tween.SetOnComplete(() => tween.IsComplete = true);
-			tween.SetOnComplete(() => TweenPool.activeTweens.Remove(tween));
 			sequence.Join(tween);
 		}
 	}

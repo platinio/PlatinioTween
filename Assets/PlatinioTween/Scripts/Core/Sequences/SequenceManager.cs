@@ -24,16 +24,13 @@ namespace Platinio.TweenEngine
 				sequence.Reset();
 			}
 
-			sequence.OnComplete += delegate { KillSequence(sequence); };
+			sequence.Recycle = KillSequence;
 			PlatinioTween.instance.OnUpdate += sequence.Update;
 			return sequence;
 		}
 
-		private static void KillSequence(Sequence sequence)
+		public static void KillSequence(Sequence sequence)
 		{
-			if(!sequence.CanRecycle)
-				return;
-
 			PlatinioTween.instance.OnUpdate -= sequence.Update;
 			sequence.Reset();
 			sequencePool.Push(sequence);

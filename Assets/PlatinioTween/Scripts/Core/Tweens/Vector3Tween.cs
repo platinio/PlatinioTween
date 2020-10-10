@@ -74,7 +74,6 @@ namespace Platinio.TweenEngine
             base.ReplayReset();
             Init(from, to, duration);
         }
-
         #endregion
     }
 
