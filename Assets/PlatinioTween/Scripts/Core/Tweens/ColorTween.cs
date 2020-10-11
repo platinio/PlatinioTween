@@ -56,6 +56,12 @@ namespace Platinio.TweenEngine
             this.to = to;
             this.duration = t;
         }
+
+        public override void ReplayReset()
+        {
+            base.ReplayReset();
+            Init(from, to, duration);
+        }
     }
 
 }

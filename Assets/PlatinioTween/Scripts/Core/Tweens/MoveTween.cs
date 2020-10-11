@@ -83,6 +83,12 @@ namespace Platinio.TweenEngine
             to = null;
             initialPos = Vector3.zero;
         }
+
+        public override void ReplayReset()
+        {
+            base.ReplayReset();
+            Init(obj, to, duration);
+        }
     }
 
 }

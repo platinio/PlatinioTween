@@ -71,6 +71,12 @@ namespace Platinio.TweenEngine
             from = Quaternion.identity;
             to = Quaternion.identity;
         }
+
+        public override void ReplayReset()
+        {
+            base.ReplayReset();
+            Init(from, to, duration);
+        }
     }
 }
 
