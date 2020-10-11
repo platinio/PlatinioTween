@@ -88,8 +88,8 @@ namespace Platinio.TweenEngine
 
         private BaseTween ProcessTween(BaseTween tween)
         {
-            tween.SetOnComplete(() => CancelTween(tween));
             tween.SetOnComplete(() => tween.IsComplete = true);
+            tween.SetOnComplete(() => tween.Recycle(tween));
             return tween;
         }
 
@@ -118,8 +118,8 @@ namespace Platinio.TweenEngine
             for (int n = 0; n < tweens.Count; n++)
             {
                 if (tweens[n].ID == id)
-                {                   
-                    //tweens.Remove(tweens[n]);
+                {
+                    tweens[n].Recycle(tweens[n]);
                     break;
                 }
             }            
@@ -348,7 +348,7 @@ namespace Platinio.TweenEngine
                 }
 
             });
-
+            
             return ProcessTween(tween);
         }
 

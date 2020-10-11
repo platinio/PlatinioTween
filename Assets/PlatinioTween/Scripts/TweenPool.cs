@@ -44,6 +44,8 @@ namespace Platinio.TweenEngine
 
         private static void AddTweenToPool(BaseTween tween)
         {
+            tween.Reset();
+            
             if (tween is ValueTween)
             {
                 valueTweens.Add(tween as ValueTween);
@@ -78,7 +80,6 @@ namespace Platinio.TweenEngine
                 int last = list.Count - 1;
                 tween = list[last];
                 list.RemoveAt(last);
-                tween.Reset();
                 return true;
             }
             else
@@ -93,7 +94,6 @@ namespace Platinio.TweenEngine
             ValueTween tween;
             if (TryGetTween(valueTweens, out tween))
             {
-                tween.Reset();
                 tween.Init(start, end, t);
             }
             else

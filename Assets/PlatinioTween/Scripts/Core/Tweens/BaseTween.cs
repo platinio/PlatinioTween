@@ -42,7 +42,7 @@ namespace Platinio.TweenEngine
 
         #region EVENTS
         protected Action onComplete = null;
-        protected Action onUpdate = null;
+        public Action onUpdate = null;
         protected Action<Vector3> onUpdateVector3 = null;
         protected Action<float> onUpdateFloat = null;
         protected Action<Color> onUpdateColor = null;
@@ -67,7 +67,7 @@ namespace Platinio.TweenEngine
         {
             if (!HandleBySequence)
             {
-                Recycle(this);
+                //Recycle(this);
             }            
         }
 
@@ -241,6 +241,7 @@ namespace Platinio.TweenEngine
             onUpdateFloat = null;
             onUpdateColor = null;
             onUpdateVector2 = null;
+            onUpdateQuaternion = null;
             PauseReset = null;
             events.Clear();
 
